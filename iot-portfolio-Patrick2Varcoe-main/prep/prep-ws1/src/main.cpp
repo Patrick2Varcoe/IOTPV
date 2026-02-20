@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
     // Initialize and read data
 
     //TODO: Initialize the HAL manager with the CSV file
-    Manager1.initialise("sensor.csv");
+    Manager1.initialise("../sensor.csv");
     //TODO: A For loop that reads the temperature data 3 times. Between each reading, sleep for 1 second, for this you can send the thread to sleep using std::this_thread::sleep_for(std::chrono::seconds(1));
     for (int i = 0; i < 3; i++) {
         std::vector<uint8_t> data = Manager1.read(0);
