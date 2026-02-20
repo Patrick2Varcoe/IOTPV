@@ -13,13 +13,13 @@ public:
     //TODO Returns the ID of the sensor
     
     int getId() override {
-        return id;
+        return self.id;
     };
 
 
     //TODO Returns the dimension (number of measurements) of the sensor
     int getDimension() override {
-        return dimension;
+        return self.dimension;
     };
 
     //TODO Formats the sensor reading into a string. It needs to convert a vector of bytes to a string.
