@@ -18,7 +18,7 @@ public:
 
 
     //TODO Returns the dimension (number of measurements) of the sensor
-    int getDimension() override {
+    int getDimension() {
         return dimension;
     };
 
