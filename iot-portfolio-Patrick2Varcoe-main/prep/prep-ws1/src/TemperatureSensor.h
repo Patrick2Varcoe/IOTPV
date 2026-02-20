@@ -13,12 +13,12 @@ public:
     //TODO Returns the ID of the sensor
     
     
-    int getId() const { return 0; } override{
+    int getId() const override{
         return id;
     }
 
     //TODO Returns the dimension (number of measurements) of the sensor
-    int getDimension() const { return 0; } override{
+    int getDimension() const override{
         return dimension;
     }
 
