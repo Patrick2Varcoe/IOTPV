@@ -25,16 +25,8 @@ public:
     //TODO Formats the sensor reading into a string. It needs to convert a vector of bytes to a string.
  
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
-        std::string result;
-
-        for (size_t i = 0; i < reading.size(); ++i) {
-            result += std::to_string(reading[i]);
-            if (i != reading.size() - 1) {
-                result += ", ";
-            }
-        }
-
-        return {result, ""}; // second string left empty
+        std::string result(reading.begin(), reading.end());
+        return {result, ""};
     }
         
 private:
