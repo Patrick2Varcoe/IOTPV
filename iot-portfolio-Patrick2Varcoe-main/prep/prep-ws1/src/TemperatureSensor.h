@@ -26,7 +26,7 @@ public:
  
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
         std::string result(reading.begin(), reading.end());
-        return {result, ""};
+        return {"Celsius",result};
     }
         
 private:
