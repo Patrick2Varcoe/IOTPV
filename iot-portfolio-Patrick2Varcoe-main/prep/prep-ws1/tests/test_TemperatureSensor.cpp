@@ -17,7 +17,7 @@ TEST_CASE("TemperatureSensor functionality", "[TemperatureSensor]") {
 
 
     SECTION("Format reading") {
-        testData = {50,55,46,53,50};
+        std::vector<uint8_t> testData = {50,55,46,53,50};
         auto formatted = tsensor->format(testData);
         REQUIRE(formatted[0] == "Celsius") ;
         REQUIRE(formatted[1] == "27.52");
