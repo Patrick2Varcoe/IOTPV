@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     Manager1.initialise(csv_File);
     //TODO: A For loop that reads the temperature data 3 times. Between each reading, sleep for 1 second, for this you can send the thread to sleep using std::this_thread::sleep_for(std::chrono::seconds(1));
     for (int i = 0; i < 3; i++) {
-        Manager1.read(0)
+        Manager1.read(0);
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
