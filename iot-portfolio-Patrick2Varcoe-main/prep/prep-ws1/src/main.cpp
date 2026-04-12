@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
         auto raw = Manager1.read(0);
         auto formatted = tsensor->format(raw);
 
-        std::cout << formatted.first << ", " << formatted.second << std::endl;
+        std::cout << formatted.first << ": " << formatted.second << std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
