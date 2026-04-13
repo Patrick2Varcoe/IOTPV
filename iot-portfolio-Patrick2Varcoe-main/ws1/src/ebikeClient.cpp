@@ -33,7 +33,24 @@ int main(int argc, char* argv[]) {
     std::cout << "Number of Ports: " << numPorts << std::endl;
     std::cout << "Max Readings: " << maxReadings << std::endl;
 
-    
+    // Create Hal Manager
+    CSVHALManager Manager1(numPorts);
+
+    // Create GPS Sensor
+    auto Gsensor = std::make_shared<GPSSensor>(0);
+
+    // Attatch GPS Sensor to Hal Manager
+    Manager1.attachDevice(2, Gsensor);
+
+
+    // Initialize Manager with CSV File
+    Manager1.initialise(csvFile);
+
+
+    // Release Device from Manager
+    Manager1.releaseDevice(2);
+    return 0;
+
 
      //TODO: complete code as per assignment specification
 
