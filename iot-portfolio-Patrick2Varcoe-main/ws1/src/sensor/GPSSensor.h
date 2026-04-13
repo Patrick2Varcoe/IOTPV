@@ -14,6 +14,10 @@ public:
         return id;
     }
 
+    int getDimension() const override {
+        return 2; 
+    }
+
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
         std::string result(reading.begin(), reading.end());
         return {result,result};
