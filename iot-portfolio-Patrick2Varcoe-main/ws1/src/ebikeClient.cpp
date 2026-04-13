@@ -7,6 +7,8 @@
 #include "hal/CSVHALManager.h"
 #include "sensor/GPSSensor.h"
 #include <ctime>
+#include <bits/stdc++.h>
+using namespace std;
 /***TODO: complete code as per assignment specification***/
 
 // --- Constants ---
