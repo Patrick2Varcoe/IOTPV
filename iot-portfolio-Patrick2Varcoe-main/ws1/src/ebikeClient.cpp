@@ -2,7 +2,7 @@
 #include <iostream>
 #include "util/MiscUtils.h"
 #include "hal/CSVHALManager.h"
-#include "GPSSensor.h"
+#include "sensor/GPSSensor.h"
 
 /***TODO: complete code as per assignment specification***/
 
