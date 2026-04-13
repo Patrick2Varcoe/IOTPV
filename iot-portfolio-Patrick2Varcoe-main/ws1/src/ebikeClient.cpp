@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
-        std::cout << formatted.first << ": " << formatted.second << std::endl;
+        std::cout << "lat: " <<formatted.first << " lon: " << formatted.second << std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }

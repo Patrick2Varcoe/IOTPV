@@ -26,7 +26,7 @@ public:
     if (commaPos != std::string::npos) {
         std::string first = result.substr(0, commaPos);
         std::string second = result.substr(commaPos + 1);
-        return {"lat :" first, "lon :" second};
+        return {first, second};
     }
 
 
