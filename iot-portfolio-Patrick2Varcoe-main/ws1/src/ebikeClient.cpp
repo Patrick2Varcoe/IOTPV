@@ -50,6 +50,16 @@ int main(int argc, char* argv[]) {
     Manager1.initialise(csvFile);
 
 
+
+    for (int i = 0; i < maxReadings; i++) {
+        auto raw = Manager1.read(0);
+        auto formatted = Gsensor->format(raw);
+
+        std::cout << formatted.first << ": " << formatted.second << std::endl;
+
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
     // Release Device from Manager
     Manager1.releaseDevice(2);
     return 0;
