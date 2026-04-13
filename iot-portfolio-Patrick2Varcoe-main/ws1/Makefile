@@ -88,8 +88,8 @@ run-ebike-client:
 
 
 
-data:
-	./generateEBikeFile 62338 1 5
+data: MAKEDATA_DIR
+	MAKEDATA_DIR ./generateEBikeFile 62338 1 5
 
 # Clean up build files
 clean:
