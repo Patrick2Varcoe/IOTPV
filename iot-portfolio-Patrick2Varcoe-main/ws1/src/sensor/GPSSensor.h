@@ -26,13 +26,14 @@ public:
     if (commaPos != std::string::npos) {
         std::string first = result.substr(0, commaPos);
         std::string second = result.substr(commaPos + 1);
-        return {first, second};
+        return {first, second};}
+        
+    return {0,0};
     }
-
-
 
 private:
     // ID of the sensor
     int id;
+    
 };
 #endif // GPSSENSOR_H
