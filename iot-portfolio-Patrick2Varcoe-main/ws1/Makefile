@@ -89,7 +89,7 @@ run-ebike-client:
 
 
 data:
-	MAKEDATA_DIR ./generateEBikeFile 62338 1 5
+	./opt/iot/bin/generateEBikeFile 62338 1 5
 
 # Clean up build files
 clean:
