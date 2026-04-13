@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 
 
     for (int i = 0; i < maxReadings; i++) {
-        auto raw = Manager1.read(0);
+        auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
         std::cout << formatted.first << ": " << formatted.second << std::endl;
