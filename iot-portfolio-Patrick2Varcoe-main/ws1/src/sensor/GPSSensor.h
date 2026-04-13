@@ -22,5 +22,5 @@ public:
 private:
     // ID of the sensor
     int id;
-}
+};
 #endif // GPSSENSOR_H
