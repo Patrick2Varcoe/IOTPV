@@ -12,8 +12,11 @@ INCLUDE_DIR = /opt/iot/include
 POCO_DIR = /opt/iot/poco
 CATCH2_DIR = /opt/iot
 
+DATA_DIR = data
+MAKEDATA_DIR = /opt/iot/bin
+
 # Server library paths
-INCLUDES = -I$(POCO_DIR)/include -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/web -I$(INCLUDE_DIR)/util -I$(SRC_DIR)
+INCLUDES = -I$(POCO_DIR)/include -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/web -I$(INCLUDE_DIR)/util -I$(SRC_DIR) 
 LIBS = -L$(LIB_DIR) -lwebserver -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread
 LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
 
@@ -81,6 +84,12 @@ run-test: tests
 
 run-ebike-client:
 	@./$(EBIKE_CLIENT_TARGET) $(ARGS)
+
+
+
+
+data:
+	./generateEBikeFile 62338 1 5
 
 # Clean up build files
 clean:
