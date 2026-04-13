@@ -1,13 +1,14 @@
 #ifndef GPSSENSOR_H // Header guard 
 #define GPSSENSOR_H
 
+#include <cstdint>
 #include "hal/ISensor.h" // Include the ISensor header
 
 class GPSSensor : public ISensor {
 
 public:
     //Constructor to initialize the sensor with an ID 
-    TemperatureSensor(int id) : id(id) {}
+    GPSSensor(int id) : id(id) {}
 
     int getId() const override{
         return id;
