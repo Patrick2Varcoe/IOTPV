@@ -65,19 +65,19 @@ int main(int argc, char* argv[]) {
     Manager1.initialise(csvFile);
 
 
-    char date[50];
+    char arrDate[50];
     string strDate = "";
-    char time[50];
+    char arrTime[50];
     string strTime = "";
     string dateandtime = "";
     for (int i = 0; i < maxReadings; i++) {
 
         time_t timestamp = time(NULL);
         struct tm datetime = *localtime(&timestamp);
-        strftime(date, "%m/%d/%y", &datetime);
-        strftime(time, "%I:%M:%S", &datetime);
-        strDate = convertToString(date,50);
-        strTime = convertToString(time,50);
+        strftime(arrDate, 50, "%m/%d/%y", &datetime);
+        strftime(arrTime, 50,"%I:%M:%S", &datetime);
+        strDate = convertToString(arrDate,50);
+        strTime = convertToString(arrTime,50);
         dateandtime = strDate + strTime;
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
