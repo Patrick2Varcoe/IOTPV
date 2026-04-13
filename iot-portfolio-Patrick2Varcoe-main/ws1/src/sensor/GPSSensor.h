@@ -2,9 +2,9 @@
 #define GPSSENSOR_H
 
 #include <cstdint>
-#include "hal/ISensor.h" // Include the ISensor header
 
-class GPSSensor : public ISensor {
+
+class GPSSensor{
 
 public:
     //Constructor to initialize the sensor with an ID 
