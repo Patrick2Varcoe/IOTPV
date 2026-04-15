@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 
         */
         time_t timestamp = time(NULL);
-        string dateandtime = getFormattedTime(&timestamp);
+        string dateandtime = getFormattedTime();
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
