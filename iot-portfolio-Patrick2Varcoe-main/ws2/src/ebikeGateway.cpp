@@ -32,6 +32,10 @@ int main() {
         std::cerr << "Server error (Poco): " << ex.displayText() << std::endl;
         return 1;
     }
+
+    SocketServer.main2();
+
+
     return 0;
 }
 
