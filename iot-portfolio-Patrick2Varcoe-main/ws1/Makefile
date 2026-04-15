@@ -93,3 +93,4 @@ data:
 # Clean up build files
 clean:
 	rm -rf $(BUILD_DIR) $(EBIKE_CLIENT_TARGET) $(TEST_BUILD_DIR)/*
+	rm -rf $(DATA_DIR)/*
