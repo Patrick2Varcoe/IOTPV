@@ -1,7 +1,7 @@
 #include "util/MiscUtils.h"
 #include "web/WebServer.h"
 #include <iostream>
-
+#include "comm/SocketServer.h"
 /***TODO: complete code as per assignment specification***/
 namespace ebikeConstants {
     const std::string CONFIG_PATH = "config/server-config.yaml";
@@ -23,6 +23,8 @@ int main() {
 
         // Start the server 
         webServer.start(port);
+
+
     
         return 0;
     } catch (const Poco::Exception& ex) {

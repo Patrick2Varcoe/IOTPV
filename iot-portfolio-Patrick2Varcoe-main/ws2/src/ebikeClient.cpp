@@ -8,6 +8,9 @@
 #include "sensor/GPSSensor.h"
 #include <ctime>
 #include <bits/stdc++.h>
+#include "sim/socket.h" 
+#include "sim/in.h" 
+#include <arpa/inet.h>
 
 using namespace std;
 /***TODO: complete code as per assignment specification***/
@@ -52,6 +55,30 @@ int main(int argc, char* argv[]) {
     std::cout << "Number of Ports: " << numPorts << std::endl;
     std::cout << "Max Readings: " << maxReadings << std::endl;
 
+    // Set client IP address
+    
+    sim::set_ipaddr(clientIp);
+    
+    // Create the client socket
+    sim::socket client(AF_INET, SOCK_DGRAM, 0);
+
+
+    // Define the server address
+    struct sockaddr_in serverAddr;
+    memset(&serverAddr, 0, sizeof(serverAddr));
+    serverAddr.sin_family = AF_INET;
+    inet_pton(AF_INET, "192.168.1.1", &serverAddr.sin_addr); // Server is on localhost
+    serverAddr.sin_port = htons(8080); // Port 8080
+        
+     // Bind the client socket to the client address
+    struct sockaddr_in clientAddr;
+    memset(&clientAddr, 0, sizeof(clientAddr));
+    clientAddr.sin_family = AF_INET;
+    inet_pton(AF_INET, clientIp, &clientAddr.sin_addr);
+    clientAddr.sin_port = htons(8085); // Let the OS choose a random port
+    client.bind(clientAddr);
+
+
     // Create Hal Manager
     CSVHALManager Manager1(numPorts);
 
@@ -65,32 +92,15 @@ int main(int argc, char* argv[]) {
     // Initialize Manager with CSV File
     Manager1.initialise(csvFile);
 
-    /*
-    char arrDate[12];
-    string strDate = "";
-    char arrTime[12];
-    string strTime = "";
-    string dateandtime = "";
-    */
     for (int i = 0; i < maxReadings; i++) {
 
-
-        /*
-        time_t timestamp = time(NULL);
-        struct tm datetime = *localtime(&timestamp);
-        strftime(arrDate, 12, "%m/%d/%y", &datetime);
-        strftime(arrTime, 12,"%I:%M:%S", &datetime);
-        strDate = convertToString(arrDate,12);
-        strTime = convertToString(arrTime,12);
-        dateandtime = strDate + strTime;
-
-        */
-      
         string dateandtime = getFormattedTime();
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
-        std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
+        string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
+    
+        //std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
@@ -99,8 +109,7 @@ int main(int argc, char* argv[]) {
     Manager1.releaseDevice(2);
     
 
-    std::cout <<"EBCLIENT] Shutting down";
+    std::cout <<"[EBCLIENT] Shutting down";
 
-     //TODO: complete code as per assignment specification
     return 0;
 }
