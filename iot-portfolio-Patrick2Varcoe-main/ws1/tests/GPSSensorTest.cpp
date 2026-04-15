@@ -2,7 +2,8 @@
 #include "catch.hpp"
 #include <cstdint>
 #include "sensor/GPSSensor.h"
-
+#include <vector>
+#include <cstring>
 
 TEST_CASE("GPSSensor functionality", "[GPSSensor]") {
     
@@ -17,7 +18,16 @@ TEST_CASE("GPSSensor functionality", "[GPSSensor]") {
 
 
         SECTION("Format reading") {
-        std::vector<double> testData = {51.457130,-2.557153};
+
+        std::vector<uint8_t> testData;
+
+        double lat = 51.457130;
+        double lon = -2.557153;
+
+        testData.resize(sizeof(lat) + sizeof(lon));
+
+        std::memcpy(testData.data(), &lat, sizeof(lat));
+        std::memcpy(testData.data() + sizeof(lat), &lon, sizeof(lon));
         auto formatted = gsensor->format(testData);
         REQUIRE(formatted.first == "lat:51.457130") ;
         REQUIRE(formatted.second == "lon:-2.557153");
