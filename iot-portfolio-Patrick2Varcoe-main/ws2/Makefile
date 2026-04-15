@@ -20,16 +20,16 @@ SIM_DIR = /opt/iot/include/sim
 # Server library paths
 INCLUDES = -I$(POCO_DIR)/include -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/web -I$(INCLUDE_DIR)/util -I$(SRC_DIR)
 LIBS = -L$(LIB_DIR) -lwebserver -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread -I$(SIM_DIR)
-LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
+LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib , -I$(SIM_DIR)
 
 # Clients library paths
 CL_INCLUDES = -I$(INCLUDE_DIR)
 CLILIBS = -L$(LIB_DIR) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread -I$(SIM_DIR)
-CL_LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
+CL_LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib , -I$(SIM_DIR)
 
 # Test paths
 TEST_INCLUDES = -I$(CATCH2_DIR) $(INCLUDES) $(CL_INCLUDES)
-TEST_LIBS = $(LIBS) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread
+TEST_LIBS = $(LIBS) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread -I$(SIM_DIR)
 
 # Target executables
 # DO NOT CHANGE THE NAMES OF THE TARGETS
