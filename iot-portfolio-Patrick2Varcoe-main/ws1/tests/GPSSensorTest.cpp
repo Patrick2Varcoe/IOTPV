@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include <cstdint>
-#include "GPSSensor.h"
+#include "sensor/GPSSensor.h"
 
 
 TEST_CASE("GPSSensor functionality", "[GPSSensor]") {
