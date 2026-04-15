@@ -33,7 +33,7 @@ int main() {
         return 1;
     }
 
-    SocketServer.main2();
+    main2();
 
 
     return 0;
