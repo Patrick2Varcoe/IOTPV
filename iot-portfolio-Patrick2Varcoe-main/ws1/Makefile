@@ -51,7 +51,7 @@ EBIKE_CLIENT_OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(EBIKE_CLIEN
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp, $(TEST_BUILD_DIR)/%.o, $(TEST_SRCS))
 
 # Build rules
-all: $(BUILD_DIR) $(EBIKE_CLIENT_TARGET) tests
+all: $(BUILD_DIR) $(EBIKE_CLIENT_TARGET) tests sim-eBike-1.csv
 
 tests: $(TEST_BINS)
 
