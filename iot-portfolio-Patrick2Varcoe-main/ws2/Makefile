@@ -12,6 +12,7 @@ INCLUDE_DIR = /opt/iot/include
 POCO_DIR = /opt/iot/poco
 CATCH2_DIR = /opt/iot
 
+BIN_DIR = /opt/iot/bin
 DATA_DIR = data
 #MAKEDATA_DIR = /opt/iot/bin
 
@@ -106,8 +107,9 @@ run-management-client:
 	@./$(MNGMT_CLIENT_TARGET) $(ARGS)
 
 sim-eBike-1.csv: 
-	./generateEBikeFile 62338 4 10
+	$(BIN_DIR)/generateEBikeFile 62338 4 10
 
 # Clean up build files
 clean:
 	rm -rf $(BUILD_DIR) $(SERVER_TARGET) $(EBIKE_CLIENT_TARGET) $(MNGMT_CLIENT_TARGET) $(TEST_BUILD_DIR)/*
+	rm -rf $(DATA_DIR)/*
