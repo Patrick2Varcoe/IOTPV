@@ -54,7 +54,7 @@ MNGMT_CLIENT_OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(MNGMT_CLIEN
 TEST_OBJS = $(patsubst $(TEST_DIR)/%.cpp, $(TEST_BUILD_DIR)/%.o, $(TEST_SRCS))
 
 # Build rules
-all: $(BUILD_DIR) $(SERVER_TARGET) $(EBIKE_CLIENT_TARGET) $(MNGMT_CLIENT_TARGET) tests
+all: $(BUILD_DIR) $(SERVER_TARGET) $(EBIKE_CLIENT_TARGET) $(MNGMT_CLIENT_TARGET) tests sim-eBike-1.csv
 
 tests: $(TEST_BINS)
 
@@ -101,6 +101,9 @@ run-ebike-client:
 
 run-management-client:
 	@./$(MNGMT_CLIENT_TARGET) $(ARGS)
+
+sim-eBike-1.csv: 
+	./generateEBikeFile 62338 4 10
 
 # Clean up build files
 clean:
