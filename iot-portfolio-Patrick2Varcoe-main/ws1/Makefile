@@ -12,7 +12,7 @@ INCLUDE_DIR = /opt/iot/include
 POCO_DIR = /opt/iot/poco
 CATCH2_DIR = /opt/iot
 
-#DATA_DIR = data
+DATA_DIR = data
 #MAKEDATA_DIR = /opt/iot/bin
 
 # Server library paths
@@ -86,7 +86,7 @@ run-ebike-client:
 	@./$(EBIKE_CLIENT_TARGET) $(ARGS)
 
 
-data:
+data: $(DATA_DIR)/%.csv
 	./generateEBikeFile 12345 1 5
 
 
