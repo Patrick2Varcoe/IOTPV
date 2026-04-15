@@ -17,7 +17,7 @@ TEST_CASE("GPSSensor functionality", "[GPSSensor]") {
 
 
         SECTION("Format reading") {
-        std::vector<uint8_t> testData = {"51.457130";"-2.557153"};
+        std::vector<uint8_t> testData = {51.457130,-2.557153};
         auto formatted = gsensor->format(testData);
         REQUIRE(formatted.first == "lat:51.457130") ;
         REQUIRE(formatted.second == "lon:-2.557153");
