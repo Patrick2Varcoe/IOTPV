@@ -28,7 +28,7 @@ public:
         std::string second = result.substr(commaPos + 1);
         return {first, second};}
         
-    return {result,result};
+    return {"gps : {lat :",result, "lon :",result};
     }
 
 private:
