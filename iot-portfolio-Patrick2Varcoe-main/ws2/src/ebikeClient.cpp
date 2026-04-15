@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     struct sockaddr_in clientAddr;
     memset(&clientAddr, 0, sizeof(clientAddr));
     clientAddr.sin_family = AF_INET;
-    inet_pton(AF_INET, clientIp, &clientAddr.sin_addr);
+    inet_pton(AF_INET, myIp, &clientAddr.sin_addr);
     clientAddr.sin_port = htons(8085); // Let the OS choose a random port
     client.bind(clientAddr);
 
