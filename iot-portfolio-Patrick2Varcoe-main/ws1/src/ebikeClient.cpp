@@ -8,6 +8,7 @@
 #include "sensor/GPSSensor.h"
 #include <ctime>
 #include <bits/stdc++.h>
+
 using namespace std;
 /***TODO: complete code as per assignment specification***/
 
@@ -64,14 +65,17 @@ int main(int argc, char* argv[]) {
     // Initialize Manager with CSV File
     Manager1.initialise(csvFile);
 
-
+    /*
     char arrDate[12];
     string strDate = "";
     char arrTime[12];
     string strTime = "";
     string dateandtime = "";
+    */
     for (int i = 0; i < maxReadings; i++) {
 
+
+        /*
         time_t timestamp = time(NULL);
         struct tm datetime = *localtime(&timestamp);
         strftime(arrDate, 12, "%m/%d/%y", &datetime);
@@ -79,19 +83,24 @@ int main(int argc, char* argv[]) {
         strDate = convertToString(arrDate,12);
         strTime = convertToString(arrTime,12);
         dateandtime = strDate + strTime;
+
+        */
+        time_t timestamp = time(NULL);
+        dateandtime = getFormattedTime(&timestamp);
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
-        std::cout <<"[EBCLIENT]" << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << std::endl;
+        std::cout <<"[EBCLIENT]" << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 
     // Release Device from Manager
     Manager1.releaseDevice(2);
-    return 0;
+    
 
+    std::cout <<"EBCLIENT] Shutting down";
 
      //TODO: complete code as per assignment specification
-
+    return 0;
 }
