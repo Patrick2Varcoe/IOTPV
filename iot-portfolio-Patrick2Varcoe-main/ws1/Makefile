@@ -86,7 +86,7 @@ run-ebike-client:
 	@./$(EBIKE_CLIENT_TARGET) $(ARGS)
 
 
-data: $(DATA_DIR)/%.csv
+data: $(DATA_DIR)/*.csv
 	./generateEBikeFile 12345 1 5
 
 
