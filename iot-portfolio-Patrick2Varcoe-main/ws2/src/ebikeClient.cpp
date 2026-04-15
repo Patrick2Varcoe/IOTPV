@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
         //std::cout << msg ;
 
         // Message to send
-        char* message = msg.c_str();
+        char* message = const_cast<char*> msg.c_str();
         ssize_t sent = client.sendto(message, strlen(message), 0, serverAddr);
         if (sent > 0) {
             std::cout << "Message to server: " << message << std::endl;
