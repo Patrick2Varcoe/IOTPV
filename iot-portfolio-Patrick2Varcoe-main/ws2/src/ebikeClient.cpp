@@ -57,7 +57,8 @@ int main(int argc, char* argv[]) {
 
     // Set client IP address
     
-    sim::set_ipaddr(clientIp);
+    const char* myIp - clientIp.c_str();
+    sim::set_ipaddr(myIp);
     
     // Create the client socket
     sim::socket client(AF_INET, SOCK_DGRAM, 0);
