@@ -11,13 +11,13 @@ TEST_CASE("GPSSensor functionality", "[GPSSensor]") {
 
     SECTION("Check ID and dimension") {
 
-        REQUIRE(tsensor->getId() == 0);
-        REQUIRE(tsensor->getDimension() == 2);
+        REQUIRE(gsensor->getId() == 0);
+        REQUIRE(gsensor->getDimension() == 2);
     }
 
 
         SECTION("Format reading") {
-        std::vector<uint8_t> testData = {"51.457130;-2.557153"};
+        std::vector<uint8_t> testData = {51.457130;-2.557153};
         auto formatted = gsensor->format(testData);
         REQUIRE(formatted.first == "lat:51.457130") ;
         REQUIRE(formatted.second == "lon:-2.557153");
