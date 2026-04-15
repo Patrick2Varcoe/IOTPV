@@ -100,7 +100,14 @@ int main(int argc, char* argv[]) {
         auto formatted = Gsensor->format(raw);
 
         string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
-    
+        //std::cout << msg ;
+
+        // Message to send
+        char* message = msg.c_str();
+        ssize_t sent = client.sendto(message, strlen(message), 0, serverAddr);
+        if (sent > 0) {
+            std::cout << "Message to server: " << message << std::endl;
+        }
         //std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(5));
@@ -110,7 +117,7 @@ int main(int argc, char* argv[]) {
     Manager1.releaseDevice(2);
     
 
-    std::cout <<"[EBCLIENT] Shutting down";
+    std::cout <<"[EBCLIENT] Shutting down \n";
 
     return 0;
 }
