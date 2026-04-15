@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-
+#include <cstdint>
 #include "hal/CSVHALManager.h"
 #include "hal/ISensor.h"
 #include "catch.hpp"
