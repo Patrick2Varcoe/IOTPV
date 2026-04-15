@@ -25,7 +25,7 @@ void signalHandler(int signal) {
 
 
 
-int main() {
+int main2() {
     try {
 
         // Register the signal handler for SIGINT
