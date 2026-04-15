@@ -24,7 +24,7 @@ LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
 
 # Clients library paths
 CL_INCLUDES = -I$(INCLUDE_DIR)
-CLILIBS = -L$(LIB_DIR) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread 
+CLILIBS = -L$(LIB_DIR) -lclient -lsimnet -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread 
 CL_LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
 
 # Test paths
