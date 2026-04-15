@@ -86,8 +86,8 @@ run-ebike-client:
 	@./$(EBIKE_CLIENT_TARGET) $(ARGS)
 
 
-data: $(DATA_DIR)/*.csv
-	./generateEBikeFile 12345 1 5
+data: 
+	./generateEBikeFile 62338 1 5
 
 
 # Clean up build files
