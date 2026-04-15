@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
         auto raw = Manager1.read(2);
         auto formatted = Gsensor->format(raw);
 
-        std::cout <<"[EBCLIENT] " << dateandtime << formatted << "(unlocked)"<< std::endl;
+        std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
 
         std::this_thread::sleep_for(std::chrono::seconds(5));
     }
