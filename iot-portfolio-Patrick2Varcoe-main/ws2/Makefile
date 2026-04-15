@@ -14,7 +14,7 @@ CATCH2_DIR = /opt/iot
 
 BIN_DIR = /opt/iot/bin
 DATA_DIR = data
-#MAKEDATA_DIR = /opt/iot/bin
+
 
 # Server library paths
 INCLUDES = -I$(POCO_DIR)/include -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/web -I$(INCLUDE_DIR)/util -I$(SRC_DIR)

@@ -13,7 +13,7 @@ POCO_DIR = /opt/iot/poco
 CATCH2_DIR = /opt/iot
 
 DATA_DIR = data
-#MAKEDATA_DIR = /opt/iot/bin
+BIN_DIR = /opt/iot/bin
 
 # Server library paths
 INCLUDES = -I$(POCO_DIR)/include -I$(INCLUDE_DIR) -I$(INCLUDE_DIR)/web -I$(INCLUDE_DIR)/util -I$(SRC_DIR) 
@@ -87,7 +87,7 @@ run-ebike-client:
 
 
 sim-eBike-1.csv: 
-	./generateEBikeFile 62338 1 5
+	$(BIN_DIR)/generateEBikeFile 62338 4 10
 
 
 # Clean up build files
