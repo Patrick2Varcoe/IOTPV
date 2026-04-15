@@ -86,7 +86,7 @@ run-ebike-client:
 	@./$(EBIKE_CLIENT_TARGET) $(ARGS)
 
 
-data: 
+sim-eBike-1.csv: 
 	./generateEBikeFile 62338 1 5
 
 
