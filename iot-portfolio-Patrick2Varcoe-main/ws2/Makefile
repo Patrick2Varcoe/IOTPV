@@ -24,12 +24,12 @@ LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
 
 # Clients library paths
 CL_INCLUDES = -I$(INCLUDE_DIR)
-CLILIBS = -L$(LIB_DIR) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread -lsim
+CLILIBS = -L$(LIB_DIR) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread 
 CL_LDFLAGS = -Wl,-rpath,$(POCO_DIR)/lib
 
 # Test paths
 TEST_INCLUDES = -I$(CATCH2_DIR) $(INCLUDES) $(CL_INCLUDES)
-TEST_LIBS = $(LIBS) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread -lsim
+TEST_LIBS = $(LIBS) -lclient -L$(POCO_DIR)/lib -lPocoNet -lPocoUtil -lPocoFoundation -lPocoJSON -lpthread 
 
 # Target executables
 # DO NOT CHANGE THE NAMES OF THE TARGETS
