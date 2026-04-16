@@ -15,12 +15,14 @@ int main() {
 
     //** TODO Adjust & add code as per assignment specification ***/
 
-    std::thread udpThread([]() {
-        main2();
-    });
+
 
     try {
         
+        std::thread udpThread([]() {
+        main2();
+        });
+
         // read webport from yaml file. DO NOT MODIFY THIS LINE, but need to update config/server-config.yaml with your allocated port as per specification.
         int port = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "webserver", "port"));
 
@@ -30,7 +32,7 @@ int main() {
         // Start the server 
         webServer.start(port);
 
-
+        udpThread.join();
     
         return 0;
     } catch (const Poco::Exception& ex) {
