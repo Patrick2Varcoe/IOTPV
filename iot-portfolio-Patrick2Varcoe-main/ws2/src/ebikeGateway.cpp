@@ -3,6 +3,7 @@
 #include <iostream>
 #include "comm/SocketServer.h"
 #include "sim/socket.h"
+#include <thread>
 /***TODO: complete code as per assignment specification***/
 namespace ebikeConstants {
     const std::string CONFIG_PATH = "config/server-config.yaml";
@@ -14,7 +15,9 @@ int main() {
 
     //** TODO Adjust & add code as per assignment specification ***/
 
-    main2();
+    std::thread udpThread([]() {
+        main2();
+    });
 
     try {
         
