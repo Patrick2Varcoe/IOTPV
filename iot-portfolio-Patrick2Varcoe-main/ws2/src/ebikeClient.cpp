@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < maxReadings; i++) {
 
         string dateandtime = getFormattedTime();
-        auto raw = Manager1.read(2);
+        auto raw = Manager1.read(desPort);
         auto formatted = Gsensor->format(raw);
 
         string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Release Device from Manager
-    Manager1.releaseDevice(2);
+    Manager1.releaseDevice(desPort);
     
 
     std::cout <<"[EBCLIENT] Shutting down \n";
