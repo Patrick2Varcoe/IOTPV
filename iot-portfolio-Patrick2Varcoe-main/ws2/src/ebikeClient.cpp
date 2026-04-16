@@ -109,8 +109,28 @@ int main(int argc, char* argv[]) {
             std::cout << "Message to server: " << message << std::endl;
         }
         //std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
+                // Buffer to receive response
+        char buffer[256];
+        struct sockaddr_in fromAddr;
+        
+        // Receive response from the server
+        ssize_t received = client.recvfrom(buffer, sizeof(buffer), 0, fromAddr);
 
+        //wait 5 seconds before closing
         std::this_thread::sleep_for(std::chrono::seconds(5));
+
+        if (received > 0) {
+            buffer[received] = '\0'; // Null-terminate the received string
+
+            // Print the received response
+            char fromIp[INET_ADDRSTRLEN];
+            inet_ntop(AF_INET, &fromAddr.sin_addr, fromIp, sizeof(fromIp));
+            uint16_t fromPort = ntohs(fromAddr.sin_port);
+
+            std::cout << "Received response: " << buffer << std::endl;
+            std::cout << "From: " << fromIp << ":" << fromPort << std::endl;
+        }
+        //std::this_thread::sleep_for(std::chrono::seconds(5));
     }
 
     // Release Device from Manager
