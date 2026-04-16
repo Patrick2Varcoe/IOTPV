@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     auto Gsensor = std::make_shared<GPSSensor>(0);
 
     // Attatch GPS Sensor to Hal Manager
-    int desPort = stoi(ebike_id);
+    int desPort = stoi(ebikeId);
     Manager1.attachDevice(desPort, Gsensor);
 
 
