@@ -61,16 +61,16 @@ int main2() {
             if (received > 0) {
                 buffer[received] = '\0'; // Null-terminate the received string
 
-                // Print the received message and client address
-                char clientIp[INET_ADDRSTRLEN];
-                inet_ntop(AF_INET, &clientAddr.sin_addr, clientIp, sizeof(clientIp));
-                uint16_t clientPort = ntohs(clientAddr.sin_port);
-               
-                MessageHandler _messageHandler = MessageHandler();
-                const char* response = _messageHandler.handleMessage(buffer,clientIp,clientPort);
+                std::thread([=]() {
+                    char clientIp[INET_ADDRSTRLEN];
+                    inet_ntop(AF_INET, &clientAddr.sin_addr, clientIp, sizeof(clientIp));
+                    uint16_t clientPort = ntohs(clientAddr.sin_port);
 
-                _messageHandler.sendResponse(serverSocket, response, clientAddr);
+                    MessageHandler handler;
+                    const char* response = handler.handleMessage(buffer, clientIp, clientPort);
+                    handler.sendResponse(serverSocket, response, clientAddr);
 
+                }).detach();
             }
         }
     } catch (const std::exception& e) {
