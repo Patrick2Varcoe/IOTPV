@@ -14,6 +14,8 @@ int main() {
 
     //** TODO Adjust & add code as per assignment specification ***/
 
+    main2();
+
     try {
         
         // read webport from yaml file. DO NOT MODIFY THIS LINE, but need to update config/server-config.yaml with your allocated port as per specification.
@@ -33,7 +35,7 @@ int main() {
         return 1;
     }
 
-    main2();
+    
 
 
     return 0;
