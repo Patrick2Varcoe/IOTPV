@@ -10,6 +10,7 @@
 #include <cstring>
 #include <arpa/inet.h>
 #include "sim/socket.h"
+#include <string>
 
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
@@ -24,6 +25,7 @@ class MessageHandler {
 
 
         string Smessage = message;
+
         size_t bracketEnd = Smessage.find("] ");
         size_t gpsPos = Smessage.find(" gps:");
 
