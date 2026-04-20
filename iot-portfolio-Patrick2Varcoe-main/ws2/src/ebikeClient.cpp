@@ -121,6 +121,9 @@ int main(int argc, char* argv[]) {
 
         Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
         props->set("name", "EBike");
+        props->set("ID",ebike_id);
+        props->set("Time",dateandtime);
+
 
         Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
         feature->set("type", "Feature");
