@@ -28,7 +28,7 @@ int main() {
 
         // Create instances of the server class
         WebServer webServer(ebikes);
-        std::cout << "WEBSERVER RUNNING";
+        //std::cout << "WEBSERVER RUNNING";
         // Start the server 
         webServer.start(port);
 
