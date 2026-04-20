@@ -11,9 +11,7 @@
 #include "sim/socket.h" 
 #include "sim/in.h" 
 #include <arpa/inet.h>
-#include <nlohmann/json.hpp>
 
-using json = nlohmann::json;
 using namespace std;
 /***TODO: complete code as per assignment specification***/
 
@@ -108,11 +106,23 @@ int main(int argc, char* argv[]) {
         string JSString = generateJsonString({{"lat", formatted.first},{"lon" formatted.second}});
         std::cout << JSString;
 
-        json feature;
 
-        feature["type"] = "Feature";
-        feature["geometry"] = {{"type","Point"},{"coordinates",{formatted}}};
-        feature["properties"]= {{"name", "EBike"}};
+        Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
+        geometry->set("type", "Point");
+
+        Poco::JSON::Array::Ptr coords = new Poco::JSON::Array;
+        coords->add(formatted.first);
+        coords->add(formatted.second);
+
+        geometry->set("coordinates", coords);
+
+        Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
+        props->set("name", "EBike");
+
+        Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
+        feature->set("type", "Feature");
+        feature->set("geometry", geometry);
+        feature->set("properties", props);
 
         // Message to send
         char* message = const_cast<char*>(msg.c_str());
