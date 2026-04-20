@@ -36,7 +36,7 @@ int main2() {
         sim::set_ipaddr("192.168.1.1");
 
        // Create the server socket
-       serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
+        serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
 
         // Server binds to a "UDP-like" address
         struct sockaddr_in serverAddr;
