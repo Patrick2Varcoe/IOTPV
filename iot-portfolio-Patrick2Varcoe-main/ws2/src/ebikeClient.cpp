@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
         string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
         //std::cout << msg ;
 
-        string JSString = MiscUtils::generateJsonString(msg);
+        string JSString = generateJsonString(msg);
         std::cout < JSString;
         // Message to send
         char* message = const_cast<char*>(msg.c_str());
