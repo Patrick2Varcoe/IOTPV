@@ -7,7 +7,9 @@
 #include "MessageHandler.h" // Include the MessageHandler header
 #include <chrono>
 #include <thread>
-
+#include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Array.h>
 sim::socket* serverSocket = nullptr; // Global pointer to the server socket
 
 // Signal handler function
@@ -46,6 +48,8 @@ int main2() {
         serverAddr.sin_port = htons(8080); // Port 8080
         serverSocket->bind(serverAddr);
 
+        Poco::JSON::Array::Ptr features = new Poco::JSON::Array;
+
         std::cout << "Server running and waiting for messages..." << std::endl;
 
         //wait 5 seconds before stating to receive messages
@@ -67,7 +71,7 @@ int main2() {
                     uint16_t clientPort = ntohs(clientAddr.sin_port);
 
                     MessageHandler handler;
-                    const char* response = handler.handleMessage(buffer, clientIp, clientPort);
+                    const char* response = handler.handleMessage(buffer, clientIp, clientPort, features);
                     handler.sendResponse(serverSocket, response, clientAddr);
 
                 }).detach();

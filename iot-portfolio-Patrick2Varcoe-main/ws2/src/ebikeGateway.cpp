@@ -4,6 +4,7 @@
 #include "comm/SocketServer.h"
 #include "sim/socket.h"
 #include <thread>
+
 /***TODO: complete code as per assignment specification***/
 namespace ebikeConstants {
     const std::string CONFIG_PATH = "config/server-config.yaml";
@@ -14,7 +15,6 @@ int main() {
     Poco::JSON::Array::Ptr ebikes = new Poco::JSON::Array();
 
     //** TODO Adjust & add code as per assignment specification ***/
-
 
 
     try {

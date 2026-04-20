@@ -107,29 +107,9 @@ int main(int argc, char* argv[]) {
         //std::cout << msg ;
 
         string JSString = generateJsonString({{"lat", formatted.first},{"lon", formatted.second}});
-        std::cout << JSString;
-
-        /*
-        Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
-        geometry->set("type", "Point");
-
-        Poco::JSON::Array::Ptr coords = new Poco::JSON::Array;
-        coords->add(formatted.first);
-        coords->add(formatted.second);
-
-        geometry->set("coordinates", coords);
-
-        Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
-        props->set("name", "EBike");
-        props->set("ID",ebikeId);
-        props->set("Time",dateandtime);
+        //std::cout << JSString;
 
 
-        Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
-        feature->set("type", "Feature");
-        feature->set("geometry", geometry);
-        feature->set("properties", props);
-        */
         // Message to send
         char* message = const_cast<char*>(msg.c_str());
         ssize_t sent = client.sendto(message, strlen(message), 0, serverAddr);

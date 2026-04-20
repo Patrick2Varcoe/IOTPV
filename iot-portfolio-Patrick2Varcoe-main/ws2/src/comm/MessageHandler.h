@@ -20,7 +20,7 @@
 class MessageHandler {
     public:
 
-    const char* handleMessage(const char* message, const char* clientIp, uint16_t clientPort) {
+    const char* handleMessage(const char* message, const char* clientIp, uint16_t clientPort, Poco::JSON::Array::Ptr features) {
         // Handle the message (existing implementation)
 
 
@@ -35,7 +35,7 @@ class MessageHandler {
         );
 
         size_t idPos = Smessage.find("[EBCLIENT]:");
-        int eId = std::stoi(Smessage.substr(idPos + 11, idPos + 12));
+        int eId = std::stoi(Smessage.substr(idPos + 11, 1));
         size_t latPos = Smessage.find("lat:");
         size_t lonPos = Smessage.find("lon:");
         size_t statusStart = Smessage.find("(", lonPos);
@@ -49,8 +49,8 @@ class MessageHandler {
         geometry->set("type", "Point");
 
         Poco::JSON::Array::Ptr coords = new Poco::JSON::Array;
-        coords->add(lat);
         coords->add(lon);
+        coords->add(lat);
 
         geometry->set("coordinates", coords);
 
@@ -65,7 +65,7 @@ class MessageHandler {
         feature->set("geometry", geometry);
         feature->set("properties", props);
 
-
+        features->add(feature);
         // TODO
         // parses the data into a JSON object, converts it to a GeoJSON object and pushes it to the eBikes list
 
