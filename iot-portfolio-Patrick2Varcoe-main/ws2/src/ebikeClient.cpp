@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
         auto raw = Manager1.read(desPort);
         auto formatted = Gsensor->format(raw);
 
-        string msg = "[EBCLIENT]:"+ desPort +" : " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
+        string msg = "[EBCLIENT]:"+ ebikeId +" : " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
         //std::cout << msg ;
 
         string JSString = generateJsonString({{"lat", formatted.first},{"lon", formatted.second}});
