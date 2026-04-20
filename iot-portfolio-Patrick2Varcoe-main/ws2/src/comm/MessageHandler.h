@@ -24,7 +24,7 @@ class MessageHandler {
         // Handle the message (existing implementation)
 
 
-        string Smessage = message;
+        std::string Smessage = message;
 
         size_t bracketEnd = Smessage.find("] ");
         size_t gpsPos = Smessage.find(" gps:");
