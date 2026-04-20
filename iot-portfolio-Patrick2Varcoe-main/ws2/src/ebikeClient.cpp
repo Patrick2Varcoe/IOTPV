@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
         //std::cout << msg ;
 
         string JSString = generateJsonString({formatted});
-        std::cout < JSString;
+        std::cout << JSString;
         // Message to send
         char* message = const_cast<char*>(msg.c_str());
         ssize_t sent = client.sendto(message, strlen(message), 0, serverAddr);
