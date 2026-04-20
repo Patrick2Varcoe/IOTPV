@@ -103,8 +103,15 @@ int main(int argc, char* argv[]) {
         string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
         //std::cout << msg ;
 
-        string JSString = generateJsonString({formatted});
+        string JSString = generateJsonString({"lat", formatted.first},"lon" formatted.second);
         std::cout << JSString;
+
+        json feature;
+
+        feature["type"] = "Feature";
+        feature["geometry"] = {{"type","Point"},{"coordinates",{formatted}}};
+        feature["properties"]= {{"name", "EBike"}};
+
         // Message to send
         char* message = const_cast<char*>(msg.c_str());
         ssize_t sent = client.sendto(message, strlen(message), 0, serverAddr);
