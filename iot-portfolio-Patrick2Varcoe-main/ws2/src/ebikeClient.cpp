@@ -11,7 +11,9 @@
 #include "sim/socket.h" 
 #include "sim/in.h" 
 #include <arpa/inet.h>
+#include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
 using namespace std;
 /***TODO: complete code as per assignment specification***/
 
@@ -103,7 +105,7 @@ int main(int argc, char* argv[]) {
         string msg = "[EBCLIENT] " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
         //std::cout << msg ;
 
-        string JSString = generateJsonString({"lat", formatted.first},"lon" formatted.second);
+        string JSString = generateJsonString({{"lat", formatted.first},{"lon" formatted.second}});
         std::cout << JSString;
 
         json feature;
