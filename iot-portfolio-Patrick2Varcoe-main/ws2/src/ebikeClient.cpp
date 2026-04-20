@@ -121,7 +121,7 @@ int main(int argc, char* argv[]) {
 
         Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
         props->set("name", "EBike");
-        props->set("ID",ebike_id);
+        props->set("ID",ebikeId);
         props->set("Time",dateandtime);
 
 
