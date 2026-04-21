@@ -29,7 +29,7 @@ class MessageHandler {
         if (Smessage.substr(0,9) == "ebike_id:"){
             
             
-            return("status: success data_interval: " + std::to_string(5));
+            return("status: success data_interval: 5");
 
         }
 
