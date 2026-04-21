@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) {
     // Initial Message To Join Fleet
 
     string initialTime = getFormattedTime();
-    string joinMsg = "ebike_id: " + ebikeId + "timestamp: " initialTime;
+    string joinMsg = "ebike_id: " + ebikeId + "timestamp: " + initialTime;
     char* Initialmessage = const_cast<char*>(joinMsg.c_str());
     ssize_t sent = client.sendto(Initialmessage, strlen(Initialmessage), 0, serverAddr);
         if (sent > 0) {
@@ -128,6 +128,7 @@ int main(int argc, char* argv[]) {
     }
 
     std::string response(buffer);
+    int Data_Interval = 5; // Deafult Value
 
     size_t pos = response.find("data_interval:");
     if (pos != std::string::npos) {
