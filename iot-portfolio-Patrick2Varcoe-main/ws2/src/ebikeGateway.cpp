@@ -15,12 +15,12 @@ int main() {
     Poco::JSON::Array::Ptr ebikes = new Poco::JSON::Array();
 
     //** TODO Adjust & add code as per assignment specification ***/
-
+    std::mutex featuresMutex;
 
     try {
         
-        std::thread udpThread([]() {
-        main2();
+        std::thread udpThread([&]() {
+        main2(ebikes, featuresMutex);
         });
 
         // read webport from yaml file. DO NOT MODIFY THIS LINE, but need to update config/server-config.yaml with your allocated port as per specification.

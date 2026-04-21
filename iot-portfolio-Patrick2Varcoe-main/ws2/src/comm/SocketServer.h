@@ -28,7 +28,7 @@ void signalHandler(int signal) {
 
 
 
-int main2() {
+int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
     try {
 
         // Register the signal handler for SIGINT
@@ -48,7 +48,7 @@ int main2() {
         serverAddr.sin_port = htons(8080); // Port 8080
         serverSocket->bind(serverAddr);
 
-        Poco::JSON::Array::Ptr features = new Poco::JSON::Array;
+        //Poco::JSON::Array::Ptr features = new Poco::JSON::Array;
 
         std::cout << "Server running and waiting for messages..." << std::endl;
 
@@ -65,13 +65,20 @@ int main2() {
             if (received > 0) {
                 buffer[received] = '\0'; // Null-terminate the received string
 
-                std::thread([=]() {
+                std::thread([=, &featuresMutex]() {
                     char clientIp[INET_ADDRSTRLEN];
                     inet_ntop(AF_INET, &clientAddr.sin_addr, clientIp, sizeof(clientIp));
                     uint16_t clientPort = ntohs(clientAddr.sin_port);
 
                     MessageHandler handler;
-                    const char* response = handler.handleMessage(buffer, clientIp, clientPort, features);
+
+                    // Lock only around the shared resource
+                    const char* response;
+                    {
+                        std::lock_guard<std::mutex> lock(featuresMutex);
+                        response = handler.handleMessage(buffer, clientIp, clientPort, features);
+                    }
+
                     handler.sendResponse(serverSocket, response, clientAddr);
 
                 }).detach();
