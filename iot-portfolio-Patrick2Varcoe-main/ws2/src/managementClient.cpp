@@ -18,6 +18,9 @@ int main(int argc, char* argv[]) {
 
     //TODO: complete code as per assignment specification
 
+    
+
+
     std::cout << "Client IP: " << clientIp << std::endl;
     std::cout << "Server IP: " << serverIp << std::endl;
     std::cout << "JSON message file: " << jsonFile << std::endl;

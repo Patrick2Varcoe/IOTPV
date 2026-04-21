@@ -97,6 +97,44 @@ int main(int argc, char* argv[]) {
     // Initialize Manager with CSV File
     Manager1.initialise(csvFile);
 
+
+    // Initial Message To Join Fleet
+
+    string initialTime = getFormattedTime();
+    string joinMsg = "ebike_id: " + ebikeId + "timestamp: " initialTime;
+    char* Initialmessage = const_cast<char*>(joinMsg.c_str());
+    ssize_t sent = client.sendto(Initialmessage, strlen(Initialmessage), 0, serverAddr);
+        if (sent > 0) {
+            std::cout << "Message to server: " << Initialmessage << std::endl;
+        }    
+    char buffer[256];
+    struct sockaddr_in fromAddr;
+        
+    // Receive response from the server
+    ssize_t received = client.recvfrom(buffer, sizeof(buffer), 0, fromAddr);
+
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+
+    if (received > 0) {
+        buffer[received] = '\0'; // Null-terminate the received string
+
+        // Print the received response
+        char fromIp[INET_ADDRSTRLEN];
+        inet_ntop(AF_INET, &fromAddr.sin_addr, fromIp, sizeof(fromIp));
+        uint16_t fromPort = ntohs(fromAddr.sin_port);
+
+        std::cout << "Received response: " << buffer << std::endl;
+        std::cout << "From: " << fromIp << ":" << fromPort << std::endl;
+    }
+
+    std::string response(buffer);
+
+    size_t pos = response.find("data_interval:");
+    if (pos != std::string::npos) {
+        std::string valuePart = response.substr(pos + 15); 
+        int Data_Interval = std::stoi(valuePart);
+    }
+
     for (int i = 0; i < maxReadings; i++) {
 
         string dateandtime = getFormattedTime();
@@ -125,7 +163,7 @@ int main(int argc, char* argv[]) {
         ssize_t received = client.recvfrom(buffer, sizeof(buffer), 0, fromAddr);
 
         //wait 5 seconds before closing
-        std::this_thread::sleep_for(std::chrono::seconds(5));
+        std::this_thread::sleep_for(std::chrono::seconds(Data_Interval));
 
         if (received > 0) {
             buffer[received] = '\0'; // Null-terminate the received string

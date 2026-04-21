@@ -26,49 +26,58 @@ class MessageHandler {
 
         std::string Smessage = message;
 
-        size_t bracketEnd = Smessage.find("] ");
-        size_t gpsPos = Smessage.find(" gps:");
+        if Smessage.substr(0,9) == "ebike_id:"{
+            
+            
+            return("status: success data_interval: " + std::to_string(5));
 
-        std::string datetime = Smessage.substr(
-            bracketEnd + 6,
-            gpsPos - (bracketEnd + 2)
-        );
+        }
 
-        size_t idPos = Smessage.find("[EBCLIENT]:");
-        int eId = std::stoi(Smessage.substr(idPos + 11, 1));
-        size_t latPos = Smessage.find("lat:");
-        size_t lonPos = Smessage.find("lon:");
-        size_t statusStart = Smessage.find("(", lonPos);
-        size_t statusEnd = Smessage.find(")", statusStart);
+        else{
 
-        double lat = std::stod(Smessage.substr(latPos + 4, lonPos - (latPos + 4)));
-        double lon = std::stod(Smessage.substr(lonPos + 4, statusStart - (lonPos + 4)));
-        std::string status = Smessage.substr(statusStart + 1, statusEnd - statusStart - 1);
+            size_t bracketEnd = Smessage.find("] ");
+            size_t gpsPos = Smessage.find(" gps:");
 
-        Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
-        geometry->set("type", "Point");
+            std::string datetime = Smessage.substr(
+                bracketEnd + 6,
+                gpsPos - (bracketEnd + 2)
+            );
 
-        Poco::JSON::Array::Ptr coords = new Poco::JSON::Array;
-        coords->add(lon);
-        coords->add(lat);
+            size_t idPos = Smessage.find("[EBCLIENT]:");
+            int eId = std::stoi(Smessage.substr(idPos + 11, 1));
+            size_t latPos = Smessage.find("lat:");
+            size_t lonPos = Smessage.find("lon:");
+            size_t statusStart = Smessage.find("(", lonPos);
+            size_t statusEnd = Smessage.find(")", statusStart);
 
-        geometry->set("coordinates", coords);
+            double lat = std::stod(Smessage.substr(latPos + 4, lonPos - (latPos + 4)));
+            double lon = std::stod(Smessage.substr(lonPos + 4, statusStart - (lonPos + 4)));
+            std::string status = Smessage.substr(statusStart + 1, statusEnd - statusStart - 1);
 
-        Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
-        props->set("name", "EBike");
-        props->set("ID",eId);
-        props->set("Time",datetime);
+            Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
+            geometry->set("type", "Point");
+
+            Poco::JSON::Array::Ptr coords = new Poco::JSON::Array;
+            coords->add(lon);
+            coords->add(lat);
+
+            geometry->set("coordinates", coords);
+
+            Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
+            props->set("name", "EBike");
+            props->set("ID",eId);
+            props->set("Time",datetime);
 
 
-        Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
-        feature->set("type", "Feature");
-        feature->set("geometry", geometry);
-        feature->set("properties", props);
+            Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
+            feature->set("type", "Feature");
+            feature->set("geometry", geometry);
+            feature->set("properties", props);
 
-        features->add(feature);
-        // TODO
-        // parses the data into a JSON object, converts it to a GeoJSON object and pushes it to the eBikes list
-
+            features->add(feature);
+            // TODO
+            // parses the data into a JSON object, converts it to a GeoJSON object and pushes it to the eBikes list
+        }
         std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
         return "OK";
