@@ -4,7 +4,7 @@
 #include "comm/SocketServer.h"
 #include "sim/socket.h"
 #include <thread>
-
+#include <mutex>
 /***TODO: complete code as per assignment specification***/
 namespace ebikeConstants {
     const std::string CONFIG_PATH = "config/server-config.yaml";

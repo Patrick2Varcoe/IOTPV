@@ -10,6 +10,7 @@
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Array.h>
+#include <mutex>
 sim::socket* serverSocket = nullptr; // Global pointer to the server socket
 
 // Signal handler function
