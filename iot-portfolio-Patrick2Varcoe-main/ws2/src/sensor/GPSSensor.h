@@ -15,21 +15,28 @@ public:
     }
 
     int getDimension() const override {
-        return 2; 
+        return 5; //Updated for new dimensions
     }
 
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
     std::string result(reading.begin(), reading.end());
 
-    size_t commaPos = result.find(';');
 
-    if (commaPos != std::string::npos) {
-        std::string first = result.substr(0, commaPos);
-        std::string second = result.substr(commaPos + 1);
-        return {first, second};}
-        
-    return {result,result};
+    std::stringstream ss(result);
+    std::string item;
+    std::vector<std::string> values;
+
+    while (std::getline(ss, item, ',')) {
+        values.push_back(item);
     }
+    // Return two sets of value, (lat and lon) and all the accellerations
+    if (values.size() >= 5) {
+        std::string pos = values[0] + "," + values[1];
+        std::string acc = values[2] + "," + values[3] + "," + values[4];
+        return {pos, acc};
+    }
+    //Fallback
+    return {result,result};}
 
 private:
     // ID of the sensor

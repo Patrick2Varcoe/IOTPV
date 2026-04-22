@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
     auto Gsensor = std::make_shared<GPSSensor>(0);
 
     // Attatch GPS Sensor to Hal Manager
-    int desPort = stoi(ebikeId);
+    int desPort = stoi(ebikeId); // Unique Port based on ID
     Manager1.attachDevice(desPort, Gsensor);
 
 
@@ -100,8 +100,10 @@ int main(int argc, char* argv[]) {
 
     // Initial Message To Join Fleet
 
+    // Getting the current time
     string initialTime = getFormattedTime();
-    string joinMsg = "ebike_id: " + ebikeId + "timestamp: " + initialTime;
+    // Constructing the messsage
+    string joinMsg = "ebike_id: " + ebikeId + " timestamp: " + initialTime;
     char* Initialmessage = const_cast<char*>(joinMsg.c_str());
     ssize_t sent = client.sendto(Initialmessage, strlen(Initialmessage), 0, serverAddr);
         if (sent > 0) {
@@ -130,6 +132,7 @@ int main(int argc, char* argv[]) {
     std::string response(buffer);
     int Data_Interval = 5; // Deafult Value
 
+    // Change data interval based on server allocation
     size_t pos = response.find("data_interval:");
     if (pos != std::string::npos) {
         std::string valuePart = response.substr(pos + 15); 
@@ -142,11 +145,47 @@ int main(int argc, char* argv[]) {
         auto raw = Manager1.read(desPort);
         auto formatted = Gsensor->format(raw);
 
-        string msg = "[EBCLIENT]:"+ ebikeId +" : " + dateandtime + " gps: lat: " + formatted.first + " lon: " + formatted.second + "(unlocked)";
-        //std::cout << msg ;
+        // Split lat/lon
+        std::stringstream posStream(formatted.first);
+        std::string lat, lon;
+        std::getline(posStream, lat, ',');
+        std::getline(posStream, lon, ',');
 
-        string JSString = generateJsonString({{"lat", formatted.first},{"lon", formatted.second}});
-        //std::cout << JSString;
+        // Split acceleration
+        std::stringstream accStream(formatted.second);
+        std::string acc_x, acc_y, acc_z;
+        std::getline(accStream, acc_x, ',');
+        std::getline(accStream, acc_y, ',');
+        std::getline(accStream, acc_z, ',');
+
+        // Construct String
+        /*
+        std::string msg = "[EBCLIENT]:" + ebikeId + " : " + dateandtime +
+            " gps: lat: " + lat +
+            " lon: " + lon +
+            " acc_x: " + acc_x +
+            " acc_y: " + acc_y +
+            " acc_z: " + acc_z +
+            " (unlocked)";
+*/
+        std::string msg = "{"
+        "\"client\":\"EBCLIENT\","
+        "\"id\":\"" + ebikeId + "\","
+        "\"timestamp\":\"" + dateandtime + "\","
+        "\"gps\":{"
+            "\"lat\":" + lat + ","
+            "\"lon\":" + lon +
+        "},"
+        "\"acc\":{"
+            "\"x\":" + acc_x + ","
+            "\"y\":" + acc_y + ","
+            "\"z\":" + acc_z +
+        "},"
+        "\"status\":\"unlocked\""
+        "}";
+
+        //string JSString = generateJsonString({{"lat", formatted.first},{"lon", formatted.second}});
+        
 
 
         // Message to send
@@ -155,7 +194,7 @@ int main(int argc, char* argv[]) {
         if (sent > 0) {
             std::cout << "Message to server: " << message << std::endl;
         }
-        //std::cout <<"[EBCLIENT] " << dateandtime << " gps: "<<"lat: " <<formatted.first << " lon: " << formatted.second << "(unlocked)"<< std::endl;
+        
                 // Buffer to receive response
         char buffer[256];
         struct sockaddr_in fromAddr;
@@ -163,7 +202,7 @@ int main(int argc, char* argv[]) {
         // Receive response from the server
         ssize_t received = client.recvfrom(buffer, sizeof(buffer), 0, fromAddr);
 
-        //wait 5 seconds before closing
+        //Data interval implementation
         std::this_thread::sleep_for(std::chrono::seconds(Data_Interval));
 
         if (received > 0) {
@@ -177,7 +216,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Received response: " << buffer << std::endl;
             std::cout << "From: " << fromIp << ":" << fromPort << std::endl;
         }
-        //std::this_thread::sleep_for(std::chrono::seconds(5));
+        
     }
 
     // Release Device from Manager

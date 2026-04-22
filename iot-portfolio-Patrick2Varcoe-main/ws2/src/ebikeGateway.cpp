@@ -19,8 +19,9 @@ int main() {
 
     try {
         
+        // Using threads to be able to run both socket and web servers simlutaniously
         std::thread udpThread([&]() {
-        main2(ebikes, featuresMutex);
+        main2(ebikes, featuresMutex); // Starts the socket server 
         });
 
         // read webport from yaml file. DO NOT MODIFY THIS LINE, but need to update config/server-config.yaml with your allocated port as per specification.
@@ -28,8 +29,8 @@ int main() {
 
         // Create instances of the server class
         WebServer webServer(ebikes);
-        //std::cout << "WEBSERVER RUNNING";
-        // Start the server 
+
+        // Start the web server 
         webServer.start(port);
 
         udpThread.join();

@@ -27,8 +27,25 @@ class MessageHandler {
         std::string Smessage = message;
 
         if (Smessage.substr(0,9) == "ebike_id:"){
-            
-            
+            size_t idPos = Smessage.find("ebike_id:");
+            size_t intervalPos = Smessage.find("data_interval:");
+
+            int eId = std::stoi(Smessage.substr(idPos + 9, intervalPos - (idPos + 9)));
+            int dataInterval = std::stoi(Smessage.substr(intervalPos + 14));
+
+            // Build JSON object (similar to your GeoJSON but simpler)
+            Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
+            props->set("ID", eId);
+            props->set("data_interval", dataInterval);
+            props->set("type", "config");
+
+            // Option 1: push directly to features (if you want everything in one list)
+            Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
+            feature->set("type", "Feature");
+            feature->set("properties", props);
+
+            features->add(feature);
+            std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
             return("status: success data_interval: 5");
 
         }
@@ -44,7 +61,8 @@ class MessageHandler {
             );
 
             size_t idPos = Smessage.find("[EBCLIENT]:");
-            int eId = std::stoi(Smessage.substr(idPos + 11, 1));
+            size_t idEnd = Smessage.find(" ", idPos);
+            int eId = std::stoi(Smessage.substr(idPos + 11, idEnd - (idPos + 11)));
             size_t latPos = Smessage.find("lat:");
             size_t lonPos = Smessage.find("lon:");
             size_t statusStart = Smessage.find("(", lonPos);
