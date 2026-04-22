@@ -28,7 +28,6 @@ class MessageHandler {
 
         if (Smessage.substr(0,9) == "ebike_id:"){
             size_t idPos = Smessage.find("ebike_id:");
-            size_t idPos = Smessage.find("ebike_id:");
             size_t timestampPos = Smessage.find("timestamp:");
 
             std::string idStr = Smessage.substr(idPos + 9, timestampPos - (idPos + 9));
@@ -38,7 +37,6 @@ class MessageHandler {
             // Build JSON object (similar to your GeoJSON but simpler)
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("ID", eId);
-            props->set("data_interval", dataInterval);
             props->set("type", "config");
 
             // Option 1: push directly to features (if you want everything in one list)
