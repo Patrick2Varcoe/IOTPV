@@ -22,7 +22,7 @@ int main() {
         });
 
         // read webport from yaml file. DO NOT MODIFY THIS LINE, but need to update config/server-config.yaml with your allocated port as per specification.
-        int port = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "webserver", "port"));
+        int port = std::stoi(readConfigValue("config/server-config.yaml", "webserver", "port"));
 
         // Create instances of the server class
         WebServer webServer(ebikes);
