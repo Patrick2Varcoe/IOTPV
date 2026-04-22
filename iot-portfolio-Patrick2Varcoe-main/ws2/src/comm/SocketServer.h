@@ -12,7 +12,9 @@
 #include <Poco/JSON/Array.h>
 #include <mutex>
 sim::socket* serverSocket = nullptr; // Global pointer to the server socket
-
+namespace ebikeConstants {
+    const std::string CONFIG_PATH = "config/client-config.yaml";
+}
 // Signal handler function
 void signalHandler(int signal) {
     if (signal == SIGINT) {
@@ -36,8 +38,10 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         std::signal(SIGINT, signalHandler);
 
         // Set server IP address
-        sim::set_ipaddr("192.168.1.1");
-
+        //sim::set_ipaddr("192.168.1.1");
+        std::string serverIp = readConfigValue(ebikeConstants::CONFIG_PATH, "server", "ip");
+        int serverPort = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port"));
+        sim::set_ipaddr(serverIp);
        // Create the server socket
         serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -45,8 +49,8 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         struct sockaddr_in serverAddr;
         memset(&serverAddr, 0, sizeof(serverAddr));
         serverAddr.sin_family = AF_INET;
-        inet_pton(AF_INET, "192.168.1.1", &serverAddr.sin_addr); // Bind to localhost
-        serverAddr.sin_port = htons(8080); // Port 8080
+        inet_pton(AF_INET, serverIp, &serverAddr.sin_addr); // Bind to localhost
+        serverAddr.sin_port = htons(serverPort); // Port 8080
         serverSocket->bind(serverAddr);
 
         //Poco::JSON::Array::Ptr features = new Poco::JSON::Array;

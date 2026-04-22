@@ -9,6 +9,13 @@
 #include "util/MiscUtils.h"
 /***TODO: complete code as per assignment specification***/
 
+namespace ebikeConstants {
+    const std::string CONFIG_PATH = "config/client-config.yaml";
+}
+namespace serverConstants {
+    const std::string CONFIG_PATH = "config/server-config.yaml";
+}
+
 int main(int argc, char* argv[]) {
     if (argc  < 3) {
         std::cerr << "Usage: " << argv[0] << " <socket_client_ip> <socket_server_ip> <json_file> " << std::endl;
@@ -38,7 +45,8 @@ int main(int argc, char* argv[]) {
         std::cerr << "Failed to open JSON file\n";
         return 1;
     }
-
+    int mgmtPort = std::stoi(readConfigValue("config/client-config.yaml", "client", "management_port"));
+    int serverPort = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port"));
     std::stringstream buffer;
     buffer << file.rdbuf();
     std::string jsonMessage = buffer.str();
@@ -54,13 +62,13 @@ int main(int argc, char* argv[]) {
     struct sockaddr_in clientAddr{};
     clientAddr.sin_family = AF_INET;
     inet_pton(AF_INET, clientIp.c_str(), &clientAddr.sin_addr);
-    clientAddr.sin_port = htons(8090); // any port
+    clientAddr.sin_port = htons(mgmtPort); // any port
     client.bind(clientAddr);
 
     struct sockaddr_in serverAddr{};
     serverAddr.sin_family = AF_INET;
     inet_pton(AF_INET, serverIp.c_str(), &serverAddr.sin_addr);
-    serverAddr.sin_port = htons(8080);
+    serverAddr.sin_port = htons(serverPort);
 
     //  Send JSON
     ssize_t sent = client.sendto(jsonMessage.c_str(), jsonMessage.size(), 0, serverAddr);
