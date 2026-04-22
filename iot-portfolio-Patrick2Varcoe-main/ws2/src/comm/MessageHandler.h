@@ -18,6 +18,8 @@
 
 
 class MessageHandler {
+    private:
+        int BaseDataInterval = 5;
     public:
 
     const char* handleMessage(const char* message, const char* clientIp, uint16_t clientPort, Poco::JSON::Array::Ptr features) {
@@ -59,7 +61,29 @@ class MessageHandler {
                 }
 
                 return "command processed";
-            }}
+            }
+        
+        
+        }
+        }
+        else if (directive == "SETUP"){
+            if (!obj->has("data_interval")) {
+                return "invalid setup";
+            }
+
+            int newInterval = obj->getValue<int>("data_interval");
+            BaseDataInterval = newInterval;
+            std::cout << "Setting global data interval to: " << newInterval << "\n";
+
+
+            for (size_t i = 0; i < features->size(); i++) {
+                auto feature = features->getObject(i);
+                auto props = feature->getObject("properties");
+
+                props->set("data_interval", newInterval);
+            }
+
+            return ("data_interval: " + std::to_string(newInterval));
         }
 
         if (Smessage.substr(0,9) == "ebike_id:"){
@@ -82,7 +106,7 @@ class MessageHandler {
 
             features->add(feature);
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
-            return("status: success data_interval: 5");
+            return("status: success data_interval: " + std::to_string(BaseDataInterval));
 
         }
 
