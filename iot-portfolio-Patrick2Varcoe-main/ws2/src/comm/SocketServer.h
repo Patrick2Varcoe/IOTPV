@@ -49,7 +49,7 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         struct sockaddr_in serverAddr;
         memset(&serverAddr, 0, sizeof(serverAddr));
         serverAddr.sin_family = AF_INET;
-        inet_pton(AF_INET, serverIp, &serverAddr.sin_addr); // Bind to localhost
+        inet_pton(AF_INET, serverIp.c_str(), &serverAddr.sin_addr); // Bind to localhost
         serverAddr.sin_port = htons(serverPort); // Port 8080
         serverSocket->bind(serverAddr);
 
