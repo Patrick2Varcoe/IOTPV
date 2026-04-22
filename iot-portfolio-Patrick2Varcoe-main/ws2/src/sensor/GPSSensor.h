@@ -29,11 +29,21 @@ public:
     while (std::getline(ss, item, ',')) {
         values.push_back(item);
     }
+
+    // If we only got 1 value, try semicolon
+    if (values.size() == 1) {
+        values.clear();
+        std::stringstream ss2(result);
+        while (std::getline(ss2, item, ';')) {
+            values.push_back(item);
+        }
+    }
     // Return two sets of value, (lat and lon) and all the accellerations
     if (values.size() >= 5) {
-        std::string pos = values[0] + "," + values[1];
-        std::string acc = values[2] + "," + values[3] + "," + values[4];
-        return {pos, acc};
+        return {
+            values[0] + "," + values[1],                      // lat,lon
+            values[2] + "," + values[3] + "," + values[4]     // acc
+        };
     }
     //Fallback
     return {result,result};}
