@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include "sim/socket.h"
 #include "sim/in.h"
+#include "util/MiscUtils.h"
 /***TODO: complete code as per assignment specification***/
 
 int main(int argc, char* argv[]) {
