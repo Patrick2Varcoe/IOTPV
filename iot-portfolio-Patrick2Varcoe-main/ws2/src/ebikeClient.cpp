@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     size_t pos = response.find("data_interval:");
     if (pos != std::string::npos) {
         std::string valuePart = response.substr(pos + 15); 
-        int Data_Interval = std::stoi(valuePart);
+        Data_Interval = std::stoi(valuePart);
     }
 
     for (int i = 0; i < maxReadings; i++) {

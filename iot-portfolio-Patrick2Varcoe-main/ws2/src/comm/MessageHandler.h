@@ -50,28 +50,21 @@ class MessageHandler {
 
         }
 
-        else{
+        else {
+            Poco::JSON::Parser parser;
+            Poco::Dynamic::Var result = parser.parse(Smessage);
+            Poco::JSON::Object::Ptr obj = result.extract<Poco::JSON::Object::Ptr>();
 
-            size_t bracketEnd = Smessage.find("] ");
-            size_t gpsPos = Smessage.find(" gps:");
+            int eId = std::stoi(obj->getValue<std::string>("id"));
+            std::string datetime = obj->getValue<std::string>("timestamp");
 
-            std::string datetime = Smessage.substr(
-                bracketEnd + 6,
-                gpsPos - (bracketEnd + 2)
-            );
+            Poco::JSON::Object::Ptr gps = obj->getObject("gps");
+            double lat = gps->getValue<double>("lat");
+            double lon = gps->getValue<double>("lon");
 
-            size_t idPos = Smessage.find("[EBCLIENT]:");
-            size_t idEnd = Smessage.find(" ", idPos);
-            int eId = std::stoi(Smessage.substr(idPos + 11, idEnd - (idPos + 11)));
-            size_t latPos = Smessage.find("lat:");
-            size_t lonPos = Smessage.find("lon:");
-            size_t statusStart = Smessage.find("(", lonPos);
-            size_t statusEnd = Smessage.find(")", statusStart);
+            std::string status = obj->getValue<std::string>("status");
 
-            double lat = std::stod(Smessage.substr(latPos + 4, lonPos - (latPos + 4)));
-            double lon = std::stod(Smessage.substr(lonPos + 4, statusStart - (lonPos + 4)));
-            std::string status = Smessage.substr(statusStart + 1, statusEnd - statusStart - 1);
-
+            // Build GeoJSON (same as before)
             Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
             geometry->set("type", "Point");
 
@@ -83,9 +76,9 @@ class MessageHandler {
 
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("name", "EBike");
-            props->set("ID",eId);
-            props->set("Time",datetime);
-
+            props->set("ID", eId);
+            props->set("Time", datetime);
+            props->set("status", status);
 
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
@@ -93,8 +86,6 @@ class MessageHandler {
             feature->set("properties", props);
 
             features->add(feature);
-            // TODO
-            // parses the data into a JSON object, converts it to a GeoJSON object and pushes it to the eBikes list
         }
         std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
