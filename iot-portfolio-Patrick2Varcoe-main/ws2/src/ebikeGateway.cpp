@@ -6,9 +6,6 @@
 #include <thread>
 #include <mutex>
 /***TODO: complete code as per assignment specification***/
-namespace ebikeConstants {
-    const std::string CONFIG_PATH = "config/server-config.yaml";
-}
 
 int main() {
     // DO NOT MODIFY THIS LINE. Creates a reference to a Poco JSON array to store the ebike objects.
