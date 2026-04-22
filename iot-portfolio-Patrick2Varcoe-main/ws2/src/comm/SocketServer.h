@@ -32,7 +32,7 @@ void signalHandler(int signal) {
 
 int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
     try {
-
+        MessageHandler handler;
         // Register the signal handler for SIGINT
         std::signal(SIGINT, signalHandler);
 
@@ -72,12 +72,12 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
             if (received > 0) {
                 buffer[received] = '\0'; // Null-terminate the received string
 
-                std::thread([=, &featuresMutex]() {
+                std::thread([=, &featuresMutex, &handler]() {
                     char clientIp[INET_ADDRSTRLEN];
                     inet_ntop(AF_INET, &clientAddr.sin_addr, clientIp, sizeof(clientIp));
                     uint16_t clientPort = ntohs(clientAddr.sin_port);
 
-                    MessageHandler handler;
+                    
 
                     // Lock only around the shared resource
                     const char* response;
