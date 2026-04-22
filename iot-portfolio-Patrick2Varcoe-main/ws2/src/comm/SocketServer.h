@@ -41,8 +41,9 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         //sim::set_ipaddr("192.168.1.1");
         std::string serverIp = readConfigValue(ebikeConstants::CONFIG_PATH, "server", "ip");
         std::cout << "Server IP: " << serverIp << std::endl;
-        int serverPort = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port"));
-        std::cout << "Server Port: "<< to_string(serverPort) << std::endl;
+        std::string portStr = readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port");
+        std::cout << "Server Port: "<< portStr << std::endl;
+        int serverPort = std::stoi(portStr);
         sim::set_ipaddr(serverIp.c_str());
        // Create the server socket
         serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
