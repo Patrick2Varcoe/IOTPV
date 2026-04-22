@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include "hal/ISensor.h" // Include the ISensor header
-
+#include <sstream>
 class GPSSensor : public ISensor {
 
 public:
