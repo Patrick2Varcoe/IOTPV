@@ -11,10 +11,9 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Array.h>
 #include <mutex>
+#include <util/MiscUtils.h>
 sim::socket* serverSocket = nullptr; // Global pointer to the server socket
-namespace ebikeConstants {
-    const std::string CONFIG_PATH = "config/client-config.yaml";
-}
+
 // Signal handler function
 void signalHandler(int signal) {
     if (signal == SIGINT) {
@@ -39,9 +38,9 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
 
         // Set server IP address
         //sim::set_ipaddr("192.168.1.1");
-        std::string serverIp = readConfigValue(ebikeConstants::CONFIG_PATH, "server", "ip");
+        std::string serverIp = readConfigValue("config/client-config.yaml", "server", "ip");
         std::cout << "Server IP: " << serverIp << std::endl;
-        std::string portStr = readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port");
+        std::string portStr = readConfigValue("config/client-config.yaml", "server", "port");
         std::cout << "Server Port: "<< portStr << std::endl;
         int serverPort = std::stoi(portStr);
         sim::set_ipaddr(serverIp.c_str());
