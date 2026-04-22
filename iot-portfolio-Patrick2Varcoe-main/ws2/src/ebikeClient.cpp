@@ -169,6 +169,7 @@ int main(int argc, char* argv[]) {
             " (unlocked)";
 */
         std::string msg = "{"
+        "\"type\":\"telemetry\","
         "\"client\":\"EBCLIENT\","
         "\"id\":\"" + ebikeId + "\","
         "\"timestamp\":\"" + dateandtime + "\","

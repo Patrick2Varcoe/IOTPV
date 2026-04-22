@@ -26,6 +26,42 @@ class MessageHandler {
 
         std::string Smessage = message;
 
+        if (Smessage[0] == '{') {
+            Poco::JSON::Parser parser;
+            auto result = parser.parse(Smessage);
+            Poco::JSON::Object::Ptr obj = result.extract<Poco::JSON::Object::Ptr>();
+            
+            if (obj->has("directive")){
+
+            std::string directive = obj->getValue<std::string>("directive");
+
+            if (directive == "COMMAND") {
+
+                // Get IDs array
+                Poco::JSON::Array::Ptr ids = obj->getArray("ebike_ids");
+
+                // Get action array (take first element)
+                Poco::JSON::Array::Ptr actions = obj->getArray("action");
+                std::string action = actions->getElement<std::string>(0);
+
+                for (size_t i = 0; i < ids->size(); i++) {
+                    int targetId = ids->getElement<int>(i);
+
+                    for (size_t j = 0; j < features->size(); j++) {
+                        auto feature = features->getObject(j);
+                        auto props = feature->getObject("properties");
+
+                        if (props->getValue<int>("ID") == targetId) {
+                            props->set("status", action);
+                            std::cout << "Updated eBike " << targetId << " to " << action << "\n";
+                        }
+                    }
+                }
+
+                return "command processed";
+            }}
+        }
+
         if (Smessage.substr(0,9) == "ebike_id:"){
             size_t idPos = Smessage.find("ebike_id:");
             size_t timestampPos = Smessage.find("timestamp:");
@@ -38,7 +74,7 @@ class MessageHandler {
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("ID", eId);
             props->set("type", "config");
-
+            props->set("status", "unlocked"); // Default Value
             // Option 1: push directly to features (if you want everything in one list)
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
