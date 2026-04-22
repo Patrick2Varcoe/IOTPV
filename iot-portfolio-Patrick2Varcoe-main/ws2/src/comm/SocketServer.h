@@ -44,7 +44,7 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         sim::set_ipaddr(serverIp.c_str());
        // Create the server socket
         serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
-
+        std::cout << "Server IP: " << serverIp << std::endl;
         // Server binds to a "UDP-like" address
         struct sockaddr_in serverAddr;
         memset(&serverAddr, 0, sizeof(serverAddr));
