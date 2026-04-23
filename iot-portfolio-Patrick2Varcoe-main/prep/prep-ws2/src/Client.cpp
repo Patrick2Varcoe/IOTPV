@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
         serverAddr.sin_family = AF_INET;
         inet_pton(AF_INET, "192.168.1.1", &serverAddr.sin_addr); // Server is on localhost
         serverAddr.sin_port = htons(8080); // Port 8080
-
+        
          // Bind the client socket to the client address
         struct sockaddr_in clientAddr;
         memset(&clientAddr, 0, sizeof(clientAddr));
