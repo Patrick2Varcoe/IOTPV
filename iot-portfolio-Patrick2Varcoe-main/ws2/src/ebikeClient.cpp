@@ -147,16 +147,16 @@ int main(int argc, char* argv[]) {
 
         // Split lat/lon
         std::stringstream posStream(formatted.first);
-        std::cout << formatted.first;
+        std::cout << formatted.second;
         std::string lat, lon;
-        std::getline(posStream, lat, ',');
+        std::getline(posStream, lat, ';');
         std::getline(posStream, lon, ',');
 
         // Split acceleration
         std::stringstream accStream(formatted.second);
         std::string acc_x, acc_y, acc_z;
-        std::getline(accStream, acc_x, ',');
-        std::getline(accStream, acc_y, ',');
+        std::getline(accStream, acc_x, ';');
+        std::getline(accStream, acc_y, ';');
         std::getline(accStream, acc_z, ',');
 
         // Construct String

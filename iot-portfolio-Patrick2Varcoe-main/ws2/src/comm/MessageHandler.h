@@ -136,14 +136,14 @@ class MessageHandler {
             // Parse Ebike information
             int eId = std::stoi(obj->getValue<std::string>("id"));
             std::string datetime = obj->getValue<std::string>("timestamp");
-            // Parse GPS 
+            // Parse GPS information
             Poco::JSON::Object::Ptr gps = obj->getObject("gps");
             double lat = gps->getValue<double>("lat");
             double lon = gps->getValue<double>("lon");
 
             std::string status = obj->getValue<std::string>("status");
 
-            // Build GeoJSON (same as before)
+            // Build GeoJSON 
             Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
             geometry->set("type", "Point");
 
@@ -163,7 +163,8 @@ class MessageHandler {
             feature->set("type", "Feature");
             feature->set("geometry", geometry);
             feature->set("properties", props);
-
+            
+            // Push object to ebike list
             features->add(feature);
         }
         std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
