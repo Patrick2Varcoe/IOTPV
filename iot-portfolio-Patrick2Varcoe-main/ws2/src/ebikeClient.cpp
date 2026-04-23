@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
 
     std::string response(buffer);
     int Data_Interval = 5; // Deafult Value
-    std::string status = "unlocked";
+
     // Change data interval based on server allocation
     size_t pos = response.find("data_interval:");
     if (pos != std::string::npos) {
@@ -177,10 +177,9 @@ int main(int argc, char* argv[]) {
             "\"y\":" + acc_y + ","
             "\"z\":" + acc_z +
         "},"
-        "\"status\":\"" + status +""
+        "\"status\":\"unlocked\""
         "}";
 
-      
         
 
 
@@ -211,23 +210,6 @@ int main(int argc, char* argv[]) {
 
             std::cout << "Received response: " << buffer << std::endl;
             std::cout << "From: " << fromIp << ":" << fromPort << std::endl;
-            std::string response(buffer);
-
-            // Update data interval
-            size_t pos = response.find("data_interval:");
-            if (pos != std::string::npos) {
-                std::string valuePart = response.substr(pos + 15);
-                Data_Interval = std::stoi(valuePart);
-                std::cout << "Updated interval: " << Data_Interval << std::endl;
-            }
-
-            // Update status
-            size_t statusPos = response.find("status:");
-            if (statusPos != std::string::npos) {
-                std::string newStatus = response.substr(statusPos + 7);
-                status = newStatus;
-                std::cout << "Updated status: " << status << std::endl;
-            }
         }
         
     }

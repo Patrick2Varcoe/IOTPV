@@ -11,7 +11,7 @@
 #include <arpa/inet.h>
 #include "sim/socket.h"
 #include <string>
-
+#include "util/MiscUtils.h"
 #include <Poco/JSON/Parser.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Array.h>
@@ -103,17 +103,17 @@ class MessageHandler {
 
             // Find position of relevant elements
             size_t idPos = Smessage.find("ebike_id:");
-            size_t timestampPos = Smessage.find("timestamp: ");
+            size_t timestampPos = Smessage.find("timestamp:");
             // Parse the ebikes ID from message
             std::string idStr = Smessage.substr(idPos + 9, timestampPos - (idPos + 9));
-            std::string datetime = Smessage.substr(timestampPos + 11, 19 );
+
             int eId = std::stoi(idStr);
-            std::string currentStatus = "unlocked"; 
+
             // Build initial JSON object with geometries
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("ID", eId);
             props->set("type", "config");
-            props->set("status", currentStatus); 
+            props->set("status", "unlocked"); // Default Status
             
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
@@ -126,7 +126,7 @@ class MessageHandler {
                 auto props = feature->getObject("properties");
 
                 if (props->getValue<int>("ID") == eId) {
-                    props->set("status", currentStatus);
+                    props->set("status", status);
                     props->set("Time", datetime);
                     found = true;
                     break;
@@ -139,7 +139,7 @@ class MessageHandler {
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
             // Respond to client informing the requested data interval from server
-            responseBuffer = "status:"+ currentStatus +" data_interval: " + std::to_string(BaseDataInterval);
+            responseBuffer = "status: success data_interval: " + std::to_string(BaseDataInterval);
             return(responseBuffer.c_str());
 
         }
@@ -152,7 +152,7 @@ class MessageHandler {
             Poco::JSON::Object::Ptr obj = result.extract<Poco::JSON::Object::Ptr>();
             // Parse Ebike information
             int eId = std::stoi(obj->getValue<std::string>("id"));
-            std::string datetime = obj->getValue<std::string>("timestamp");
+            //std::string datetime = obj->getValue<std::string>("timestamp");
             // Parse GPS information
             Poco::JSON::Object::Ptr gps = obj->getObject("gps");
             double lat = gps->getValue<double>("lat");
@@ -180,7 +180,7 @@ class MessageHandler {
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("name", "EBike");
             props->set("ID", eId);
-            props->set("Time", datetime);
+            props->set("Time", getFormattedTime());
             props->set("status", status);
 
             props->set("acc_x", acc_x);
