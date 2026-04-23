@@ -116,7 +116,7 @@ clean:
 	rm -rf $(DATA_DIR)/*
 
 
--include $(SERVER_OBJS:.o=.d)
--include $(EBIKE_CLIENT_OBJS:.o=.d)
--include $(MNGMT_CLIENT_OBJS:.o=.d)
--include $(TEST_OBJS:.o=.d)
+#-include $(SERVER_OBJS:.o=.d)
+#-include $(EBIKE_CLIENT_OBJS:.o=.d)
+#-include $(MNGMT_CLIENT_OBJS:.o=.d)
+#-include $(TEST_OBJS:.o=.d)
