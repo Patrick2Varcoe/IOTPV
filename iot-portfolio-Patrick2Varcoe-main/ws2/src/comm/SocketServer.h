@@ -7,7 +7,7 @@
 #include "MessageHandler.h" // Include the MessageHandler header
 #include <chrono>
 #include <thread>
-#include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Parser.h> //Include poco libraries
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Array.h>
 #include <mutex>
@@ -37,12 +37,14 @@ int main2(Poco::JSON::Array::Ptr features, std::mutex& featuresMutex) {
         std::signal(SIGINT, signalHandler);
 
         // Set server IP address
-        //sim::set_ipaddr("192.168.1.1");
+        // Read server port and ip from configuration files
         std::string serverIp = readConfigValue("config/client-config.yaml", "server", "ip");
-        std::cout << "Server IP: " << serverIp << std::endl;
+        
         std::string portStr = readConfigValue("config/client-config.yaml", "server", "port");
-        std::cout << "Server Port: "<< portStr << std::endl;
+        
+        // Convert read port to int
         int serverPort = std::stoi(portStr);
+        // Set the server ip as the read ip converted to char array
         sim::set_ipaddr(serverIp.c_str());
        // Create the server socket
         serverSocket = new sim::socket(AF_INET, SOCK_DGRAM, 0);
