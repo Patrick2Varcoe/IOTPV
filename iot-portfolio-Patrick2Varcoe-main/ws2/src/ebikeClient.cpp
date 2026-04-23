@@ -8,8 +8,8 @@
 #include "sensor/GPSSensor.h"
 #include <ctime>
 #include <bits/stdc++.h>
-#include "sim/socket.h" 
-#include "sim/in.h" 
+//#include "sim/socket.h" 
+//#include "sim/in.h" 
 //#include <arpa/inet.h>
 
 #include <Poco/JSON/Parser.h>

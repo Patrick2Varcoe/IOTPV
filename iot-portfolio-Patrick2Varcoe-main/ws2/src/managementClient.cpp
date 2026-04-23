@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
-#include <arpa/inet.h>
+//#include <arpa/inet.h>
 #include "sim/socket.h"
 #include "sim/in.h"
 #include "util/MiscUtils.h"
