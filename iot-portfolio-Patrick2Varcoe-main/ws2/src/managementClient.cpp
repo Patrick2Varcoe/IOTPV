@@ -7,7 +7,6 @@
 #include "sim/socket.h"
 #include "sim/in.h"
 #include "util/MiscUtils.h"
-/***TODO: complete code as per assignment specification***/
 
 namespace ebikeConstants {
     const std::string CONFIG_PATH = "config/client-config.yaml";
@@ -45,11 +44,14 @@ int main(int argc, char* argv[]) {
         std::cerr << "Failed to open JSON file\n";
         return 1;
     }
+    // Extract Management and Server ports from config files
     int mgmtPort = std::stoi(readConfigValue("config/client-config.yaml", "client", "management_port"));
     int serverPort = std::stoi(readConfigValue(ebikeConstants::CONFIG_PATH, "server", "port"));
+    // Set up and use buffer to read json file
     std::stringstream buffer;
     buffer << file.rdbuf();
     std::string jsonMessage = buffer.str();
+    // Find and replace missing timestamp with current time
     size_t pos = jsonMessage.find("\"timestamp\": \"TODO\"");
     if (pos != std::string::npos) {
         std::string newTimestamp = "\"timestamp\": \"" + getFormattedTime() + "\"";
@@ -62,7 +64,7 @@ int main(int argc, char* argv[]) {
     struct sockaddr_in clientAddr{};
     clientAddr.sin_family = AF_INET;
     inet_pton(AF_INET, clientIp.c_str(), &clientAddr.sin_addr);
-    clientAddr.sin_port = htons(mgmtPort); // any port
+    clientAddr.sin_port = htons(mgmtPort); 
     client.bind(clientAddr);
 
     struct sockaddr_in serverAddr{};

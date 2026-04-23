@@ -15,7 +15,7 @@ public:
     }
 
     int getDimension() const override {
-        return 2; //Updated for new dimensions
+        return 5; //Updated for new dimensions
     }
 
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
