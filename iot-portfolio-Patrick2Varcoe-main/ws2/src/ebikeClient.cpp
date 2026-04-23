@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
 
     std::string response(buffer);
     int Data_Interval = 5; // Deafult Value
-
+    std::string status = "unlocked";
     // Change data interval based on server allocation
     size_t pos = response.find("data_interval:");
     if (pos != std::string::npos) {
@@ -162,15 +162,7 @@ int main(int argc, char* argv[]) {
         std::getline(accStream, acc_z, ',');
 
         // Construct String
-        /*
-        std::string msg = "[EBCLIENT]:" + ebikeId + " : " + dateandtime +
-            " gps: lat: " + lat +
-            " lon: " + lon +
-            " acc_x: " + acc_x +
-            " acc_y: " + acc_y +
-            " acc_z: " + acc_z +
-            " (unlocked)";
-*/
+
         std::string msg = "{"
         "\"type\":\"telemetry\","
         "\"client\":\"EBCLIENT\","
@@ -185,10 +177,10 @@ int main(int argc, char* argv[]) {
             "\"y\":" + acc_y + ","
             "\"z\":" + acc_z +
         "},"
-        "\"status\":\"unlocked\""
+        "\"status\":\"" + status +""
         "}";
 
-        //string JSString = generateJsonString({{"lat", formatted.first},{"lon", formatted.second}});
+      
         
 
 
@@ -219,6 +211,23 @@ int main(int argc, char* argv[]) {
 
             std::cout << "Received response: " << buffer << std::endl;
             std::cout << "From: " << fromIp << ":" << fromPort << std::endl;
+            std::string response(buffer);
+
+            // Update data interval
+            size_t pos = response.find("data_interval:");
+            if (pos != std::string::npos) {
+                std::string valuePart = response.substr(pos + 15);
+                Data_Interval = std::stoi(valuePart);
+                std::cout << "Updated interval: " << Data_Interval << std::endl;
+            }
+
+            // Update status
+            size_t statusPos = response.find("status:");
+            if (statusPos != std::string::npos) {
+                std::string newStatus = response.substr(statusPos + 7);
+                status = newStatus;
+                std::cout << "Updated status: " << status << std::endl;
+            }
         }
         
     }

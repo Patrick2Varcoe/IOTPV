@@ -69,7 +69,8 @@ class MessageHandler {
                     }
                 }
                 // Return response to inform sender
-                return "command processed";
+                responseBuffer = "status: " + action;
+                return responseBuffer.c_str();
             }
         
         
@@ -118,7 +119,23 @@ class MessageHandler {
             feature->set("type", "Feature");
             feature->set("properties", props);
 
-            features->add(feature);
+            bool found = false;
+
+            for (size_t i = 0; i < features->size(); i++) {
+                auto feature = features->getObject(i);
+                auto props = feature->getObject("properties");
+
+                if (props->getValue<int>("ID") == eId) {
+                    props->set("status", status);
+                    props->set("Time", datetime);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                features->add(feature);
+            }
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
             // Respond to client informing the requested data interval from server
