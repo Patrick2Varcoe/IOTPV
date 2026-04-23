@@ -25,6 +25,7 @@ TEST_CASE("CSVHALManager functionality", "[CSVHALManager]") {
     halManager.attachDevice(0, sensor);
 
 
+
     SECTION("Attach and release device") {
         halManager.releaseDevice(0);
         REQUIRE_THROWS_AS(halManager.read(0), std::runtime_error);
