@@ -139,7 +139,7 @@ class MessageHandler {
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
             // Respond to client informing the requested data interval from server
-            responseBuffer = "status:"+ status +" data_interval: " + std::to_string(BaseDataInterval);
+            responseBuffer = "status:"+ currentStatus +" data_interval: " + std::to_string(BaseDataInterval);
             return(responseBuffer.c_str());
 
         }
