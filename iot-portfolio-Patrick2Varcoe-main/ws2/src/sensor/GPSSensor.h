@@ -39,7 +39,7 @@ public:
         }
     }
     // Return two sets of value, (lat and lon) and all the accellerations
-    if (values.size() >= 5) {
+    if true{//(values.size() >= 5) {
         return {
             values[0] + "," + values[1],                      // lat,lon
             values[2] + "," + values[3] + "," + values[4]     // acc
