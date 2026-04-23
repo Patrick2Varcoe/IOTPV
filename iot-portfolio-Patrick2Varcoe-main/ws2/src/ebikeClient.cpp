@@ -147,6 +147,7 @@ int main(int argc, char* argv[]) {
 
         // Split lat/lon
         std::stringstream posStream(formatted.first);
+        std::cout << formatted.first;
         std::string lat, lon;
         std::getline(posStream, lat, ',');
         std::getline(posStream, lon, ',');
