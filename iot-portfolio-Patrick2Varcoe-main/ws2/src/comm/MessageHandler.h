@@ -108,12 +108,12 @@ class MessageHandler {
             std::string idStr = Smessage.substr(idPos + 9, timestampPos - (idPos + 9));
 
             int eId = std::stoi(idStr);
-
+            std::string currentStatus = "unlocked"; 
             // Build initial JSON object with geometries
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("ID", eId);
             props->set("type", "config");
-            props->set("status", "unlocked"); // Default Status
+            props->set("status", status); // Default Status
             
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
@@ -139,7 +139,7 @@ class MessageHandler {
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
             // Respond to client informing the requested data interval from server
-            responseBuffer = "status: success data_interval: " + std::to_string(BaseDataInterval);
+            responseBuffer = "status:"+ status +" data_interval: " + std::to_string(BaseDataInterval);
             return(responseBuffer.c_str());
 
         }
@@ -158,6 +158,13 @@ class MessageHandler {
             double lat = gps->getValue<double>("lat");
             double lon = gps->getValue<double>("lon");
 
+            // Parse acceleration information
+            Poco::JSON::Object::Ptr acc = obj->getObject("acc");
+
+            double acc_x = acc->getValue<double>("x");
+            double acc_y = acc->getValue<double>("y");
+            double acc_z = acc->getValue<double>("z");
+
             std::string status = obj->getValue<std::string>("status");
 
             // Build GeoJSON 
@@ -175,6 +182,10 @@ class MessageHandler {
             props->set("ID", eId);
             props->set("Time", datetime);
             props->set("status", status);
+
+            props->set("acc_x", acc_x);
+            props->set("acc_y", acc_y);
+            props->set("acc_z", acc_z);
 
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
