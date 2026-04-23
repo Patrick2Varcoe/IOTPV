@@ -162,7 +162,7 @@ class MessageHandler {
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("name", "EBike");
             props->set("ID", eId);
-            props->set("Time", getFormattedTime);
+            props->set("Time", getFormattedTime());
             props->set("status", "status");
 
             props->set("acc_x", acc_x);
