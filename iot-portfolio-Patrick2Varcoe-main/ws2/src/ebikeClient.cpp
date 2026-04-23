@@ -140,11 +140,11 @@ int main(int argc, char* argv[]) {
     }
 
     for (int i = 0; i < maxReadings; i++) {
-        std::cout << desPort << "  Port  " << std::endl;
+        //std::cout << desPort << "  Port  " << std::endl;
         string dateandtime = getFormattedTime();
         auto raw = Manager1.read(desPort);
         
-        std::cout << raw.size() << "  Size  " << std::endl;
+        //std::cout << raw.size() << "  Size  " << std::endl;
         auto formatted = Gsensor->format(raw);
 
         // Split lat/lon
@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
         std::stringstream accStream(formatted.second);
         std::string acc_x, acc_y, acc_z;
         std::getline(accStream, acc_x, ',');
-        std::getline(accStream, acc_y, ';');
+        std::getline(accStream, acc_y, ',');
         std::getline(accStream, acc_z, ',');
 
         // Construct String
