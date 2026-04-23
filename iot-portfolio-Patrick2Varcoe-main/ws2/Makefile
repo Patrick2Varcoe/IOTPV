@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -O2 -Wall -MMD -MP
+CXXFLAGS = -std=c++17 -O2 -Wall
 
 # Paths
 SRC_DIR = src
