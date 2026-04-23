@@ -103,17 +103,17 @@ class MessageHandler {
 
             // Find position of relevant elements
             size_t idPos = Smessage.find("ebike_id:");
-            size_t timestampPos = Smessage.find("timestamp:");
+            size_t timestampPos = Smessage.find("timestamp: ");
             // Parse the ebikes ID from message
             std::string idStr = Smessage.substr(idPos + 9, timestampPos - (idPos + 9));
-
+            std::string datetime = Smessage.substr(timestampPos + 11, 19 );
             int eId = std::stoi(idStr);
             std::string currentStatus = "unlocked"; 
             // Build initial JSON object with geometries
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("ID", eId);
             props->set("type", "config");
-            props->set("status", status); // Default Status
+            props->set("status", currentStatus); 
             
             Poco::JSON::Object::Ptr feature = new Poco::JSON::Object;
             feature->set("type", "Feature");
@@ -126,7 +126,7 @@ class MessageHandler {
                 auto props = feature->getObject("properties");
 
                 if (props->getValue<int>("ID") == eId) {
-                    props->set("status", status);
+                    props->set("status", currentStatus);
                     props->set("Time", datetime);
                     found = true;
                     break;
