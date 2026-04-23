@@ -69,8 +69,7 @@ class MessageHandler {
                     }
                 }
                 // Return response to inform sender
-                responseBuffer = "status: " + action;
-                return responseBuffer.c_str();
+                return "command processed";
             }
         
         
@@ -119,23 +118,7 @@ class MessageHandler {
             feature->set("type", "Feature");
             feature->set("properties", props);
 
-            bool found = false;
-
-            for (size_t i = 0; i < features->size(); i++) {
-                auto feature = features->getObject(i);
-                auto props = feature->getObject("properties");
-
-                if (props->getValue<int>("ID") == eId) {
-                    props->set("status", status);
-                    props->set("Time", datetime);
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                features->add(feature);
-            }
+            features->add(feature);
             std::cout << "Handling message from " << clientIp << ":" << clientPort << " - " << message << std::endl;
 
             // Respond to client informing the requested data interval from server
@@ -152,20 +135,19 @@ class MessageHandler {
             Poco::JSON::Object::Ptr obj = result.extract<Poco::JSON::Object::Ptr>();
             // Parse Ebike information
             int eId = std::stoi(obj->getValue<std::string>("id"));
-            //std::string datetime = obj->getValue<std::string>("timestamp");
+            
             // Parse GPS information
             Poco::JSON::Object::Ptr gps = obj->getObject("gps");
             double lat = gps->getValue<double>("lat");
             double lon = gps->getValue<double>("lon");
 
-            // Parse acceleration information
+            
+
             Poco::JSON::Object::Ptr acc = obj->getObject("acc");
 
             double acc_x = acc->getValue<double>("x");
             double acc_y = acc->getValue<double>("y");
             double acc_z = acc->getValue<double>("z");
-
-            std::string status = obj->getValue<std::string>("status");
 
             // Build GeoJSON 
             Poco::JSON::Object::Ptr geometry = new Poco::JSON::Object;
@@ -180,8 +162,8 @@ class MessageHandler {
             Poco::JSON::Object::Ptr props = new Poco::JSON::Object;
             props->set("name", "EBike");
             props->set("ID", eId);
-            props->set("Time", getFormattedTime());
-            props->set("status", status);
+            props->set("Time", getFormattedTime);
+            props->set("status", "status");
 
             props->set("acc_x", acc_x);
             props->set("acc_y", acc_y);
