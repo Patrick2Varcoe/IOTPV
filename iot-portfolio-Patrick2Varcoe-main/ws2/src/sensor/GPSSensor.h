@@ -21,7 +21,7 @@ public:
     virtual std::pair<std::string, std::string> format(std::vector<uint8_t> reading) {
     std::string result(reading.begin(), reading.end());
 
-
+    std::cout << result << "   Raw String" << std::endl;
     std::stringstream ss(result);
     std::string item;
     std::vector<std::string> values;
