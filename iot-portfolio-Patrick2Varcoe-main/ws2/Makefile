@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -O2 -Wall
+CXXFLAGS = -std=c++17 -O2 -Wall -MMD -MP
 
 # Paths
 SRC_DIR = src
@@ -114,3 +114,9 @@ sim-eBike-1.csv:
 clean:
 	rm -rf $(BUILD_DIR) $(SERVER_TARGET) $(EBIKE_CLIENT_TARGET) $(MNGMT_CLIENT_TARGET) $(TEST_BUILD_DIR)/*
 	rm -rf $(DATA_DIR)/*
+
+
+-include $(SERVER_OBJS:.o=.d)
+-include $(EBIKE_CLIENT_OBJS:.o=.d)
+-include $(MNGMT_CLIENT_OBJS:.o=.d)
+-include $(TEST_OBJS:.o=.d)
