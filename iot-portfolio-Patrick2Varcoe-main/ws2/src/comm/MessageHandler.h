@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <cstring>
-//#include <arpa/inet.h>
+#include <arpa/inet.h>
 #include "sim/socket.h"
 #include <string>
 

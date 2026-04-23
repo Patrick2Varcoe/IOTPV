@@ -2,7 +2,7 @@
 #include "web/WebServer.h"
 #include <iostream>
 #include "comm/SocketServer.h"
-//#include "sim/socket.h"
+#include "sim/socket.h"
 #include <thread>
 #include <mutex>
 /***TODO: complete code as per assignment specification***/
